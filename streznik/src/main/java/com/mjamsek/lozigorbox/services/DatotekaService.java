@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface DatotekaService {
 	
-	public void shraniDatoteko(MultipartFile file);
+	public void shraniDatoteko(MultipartFile file, long parent);
 	
-	public void shraniDatoteke(MultipartFile[] files);
+	public void shraniDatoteke(MultipartFile[] files, long parent);
 	
 	public void izbrisiDatoteko(Datoteka datoteka);
 	

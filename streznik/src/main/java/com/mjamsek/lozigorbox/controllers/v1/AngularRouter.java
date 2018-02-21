@@ -9,7 +9,6 @@ public class AngularRouter {
 	
 	@GetMapping(value = "/**/{path:[^\\.]*}")
 	public String forward(@PathVariable("path") String path) {
-		System.out.println("POT: " + path);
 		return "forward:/";
 	}
 	

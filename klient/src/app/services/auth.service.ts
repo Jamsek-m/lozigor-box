@@ -71,6 +71,10 @@ export class AuthService {
         }
     }
 
+    public odjaviUporabnika() {
+        localStorage.removeItem(this.TOKEN_STORAGE_NAME);
+    }
+
     private handleError(err: HttpErrorResponse | any) {
         console.error("Prišlo je od napake! ", err);
         return Observable.throw(err.name || err);

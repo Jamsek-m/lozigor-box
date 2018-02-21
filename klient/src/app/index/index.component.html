@@ -3,7 +3,22 @@
     <h2>Index stran</h2>
     <p>{{sporocilo}}</p>
 
-    <a (click)="preusmeriNaPrijavo()" routerLink="">Prijava</a> <br/>
+    <div>
+        <h3>Kazalo</h3>
+        <ul>
+            <li>
+                <a [routerLink]="['/upload']" >Upload</a>
+            </li>
+
+        </ul>
+    </div>
+
+    <div *ngIf="trenutniUporabnik == null">
+        <a (click)="preusmeriNaPrijavo()" routerLink="">Prijava</a>
+    </div>
+    <div *ngIf="trenutniUporabnik != null">
+        <a routerLink="" (click)="odjava()">Odjava</a>
+    </div>
 
 
 </div>

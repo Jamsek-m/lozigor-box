@@ -11,6 +11,9 @@ import {BootstrapModule} from "./bootstrap.module";
 import {PrijavaComponent} from "./prijava/prijava.component";
 import {AuthService} from "./services/auth.service";
 import {AuthGuard} from "./services/auth.guard";
+import {NiPravicComponent} from "./napake/401/ni.pravic.component";
+import {NeObstajaComponent} from "./napake/404/ne.obstaja.component";
+import {AngularFontAwesomeModule} from "angular-font-awesome";
 
 
 @NgModule({
@@ -18,14 +21,17 @@ import {AuthGuard} from "./services/auth.guard";
         OgrodjeComponent,
         // krmilniki
         IndexComponent,
-        PrijavaComponent
+        PrijavaComponent,
+        NiPravicComponent,
+        NeObstajaComponent
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
         AppRoutingModule,
         FormsModule,
-        BootstrapModule
+        BootstrapModule,
+        AngularFontAwesomeModule
     ],
     providers: [AuthService, AuthGuard],
     bootstrap: [OgrodjeComponent]

@@ -20,9 +20,10 @@ public class DatotekaVir {
 	
 	@PostMapping({"", "/"})
 	public ResponseEntity shraniDatoteko(
-			@RequestParam("files")MultipartFile[] files
+			@RequestParam("files")MultipartFile[] files,
+			@RequestParam("parent") long parent
 			) {
-		datotekaService.shraniDatoteke(files);
+		datotekaService.shraniDatoteke(files, parent);
 		URI uri = null;
 		try {
 			uri = new URI("#");

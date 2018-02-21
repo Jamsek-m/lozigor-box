@@ -10,13 +10,15 @@ import {TrenutniUporabnik} from "../models/token/TrenutniUporabnik";
 })
 export class IndexComponent implements OnInit {
     sporocilo: String;
+    trenutniUporabnik;
 
     constructor(private auth: AuthService, private router: Router) {}
 
     ngOnInit(): void {
+        this.trenutniUporabnik = this.auth.pridobiTrenutnegaUporabnika();
         let msg = "Hello ";
         if (this.auth.jePrijavljen()) {
-            const currUser: TrenutniUporabnik = this.auth.pridobiTrenutnegaUporabnika();
+            const currUser: TrenutniUporabnik = this.trenutniUporabnik;
             msg += currUser.ime;
         } else {
             msg += "svet!";
@@ -30,5 +32,10 @@ export class IndexComponent implements OnInit {
 
     preusmeriNaPrijavo() {
         this.router.navigate(["/prijava"]);
+    }
+
+    odjava() {
+        this.auth.odjaviUporabnika();
+        this.router.navigateByUrl("/prijava");
     }
 }

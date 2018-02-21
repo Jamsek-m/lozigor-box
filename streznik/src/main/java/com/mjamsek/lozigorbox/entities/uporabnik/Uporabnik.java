@@ -1,5 +1,7 @@
 package com.mjamsek.lozigorbox.entities.uporabnik;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -15,6 +17,7 @@ public class Uporabnik {
 	private String email;
 	
 	@Column
+	@JsonIgnore
 	private String geslo;
 	
 	@Column(name = "upb_ime")

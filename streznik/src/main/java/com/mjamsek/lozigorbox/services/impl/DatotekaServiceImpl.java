@@ -4,6 +4,7 @@ import com.mjamsek.lozigorbox.entities.datoteka.Datoteka;
 import com.mjamsek.lozigorbox.repositories.DatotekaRepository;
 import com.mjamsek.lozigorbox.services.DatotekaService;
 import com.mjamsek.lozigorbox.services.FileService;
+import com.mjamsek.lozigorbox.services.MenuItemService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,14 +20,17 @@ public class DatotekaServiceImpl implements DatotekaService {
 	@Inject
 	private DatotekaRepository datotekaRepository;
 	
+	@Inject
+	private MenuItemService menuItemService;
 	
 	@Override
-	public void shraniDatoteko(MultipartFile file) {
+	public void shraniDatoteko(MultipartFile file, long parent) {
 		Datoteka dat = new Datoteka(file);
 		fileService.shraniNaDisk(file);
 		Datoteka obstojeca = datotekaRepository.findByLokacija(file.getOriginalFilename());
 		if(obstojeca == null) {
 			datotekaRepository.save(dat);
+			menuItemService.dodajDatoteko(dat, parent);
 		} else {
 			obstojeca.posodobi(file);
 			datotekaRepository.save(obstojeca);
@@ -34,9 +38,9 @@ public class DatotekaServiceImpl implements DatotekaService {
 	}
 	
 	@Override
-	public void shraniDatoteke(MultipartFile[] files) {
+	public void shraniDatoteke(MultipartFile[] files, long parent) {
 		for(MultipartFile file : files) {
-			this.shraniDatoteko(file);
+			this.shraniDatoteko(file, parent);
 		}
 	}
 	
