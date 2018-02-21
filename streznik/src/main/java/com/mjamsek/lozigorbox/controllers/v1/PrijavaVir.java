@@ -5,14 +5,12 @@ import com.mjamsek.lozigorbox.entities.requests.PrijavaRequest;
 import com.mjamsek.lozigorbox.entities.responses.PrijavaResponse;
 import com.mjamsek.lozigorbox.security.PrijavaService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/v1")
 public class PrijavaVir {
 

@@ -31,19 +31,14 @@ public class PrijavaServiceImpl implements PrijavaService {
 		Uporabnik uporabnik = uporabnikService.poisciZEmailom(req.email);
 		
 		if(uporabnik == null) {
-			System.err.println("Ni uporabnika!");
 			throw new NapacnaPrijavaException();
 		}
 		
 		if(bCrypt.matches(req.geslo, uporabnik.getGeslo())) {
 			String zeton = zetonService.generirajZeton(uporabnik);
 			return zeton;
-			
 		} else {
-			System.err.println("Gesli se ne ujemata!");
 			throw new NapacnaPrijavaException();
 		}
-		
 	}
-	
 }

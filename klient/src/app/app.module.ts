@@ -9,6 +9,8 @@ import {IndexComponent} from "./index/index.component";
 import {AppRoutingModule} from "./app-routing.module";
 import {BootstrapModule} from "./bootstrap.module";
 import {PrijavaComponent} from "./prijava/prijava.component";
+import {AuthService} from "./services/auth.service";
+import {AuthGuard} from "./services/auth.guard";
 
 
 @NgModule({
@@ -25,7 +27,7 @@ import {PrijavaComponent} from "./prijava/prijava.component";
         FormsModule,
         BootstrapModule
     ],
-    providers: [],
+    providers: [AuthService, AuthGuard],
     bootstrap: [OgrodjeComponent]
 })
 export class AppModule {

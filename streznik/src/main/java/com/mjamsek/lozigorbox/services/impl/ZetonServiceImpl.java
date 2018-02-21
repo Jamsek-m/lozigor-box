@@ -1,14 +1,20 @@
 package com.mjamsek.lozigorbox.services.impl;
 
+import com.mjamsek.lozigorbox.entities.exceptions.NiPravicException;
 import com.mjamsek.lozigorbox.entities.uporabnik.Uporabnik;
+import com.mjamsek.lozigorbox.services.UporabnikService;
 import com.mjamsek.lozigorbox.services.ZetonService;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
+import static com.mjamsek.lozigorbox.security.config.SecurityKonstante.HEADER_STRING;
+import static com.mjamsek.lozigorbox.security.config.SecurityKonstante.TOKEN_PREFIX;
 import static com.mjamsek.lozigorbox.security.config.SecurityKonstante.vrniExpirationDatum;
 
 @Service
@@ -23,6 +29,9 @@ public class ZetonServiceImpl implements ZetonService {
 	@Value("${politika.jwt-token.title}")
 	private String JWTSubject;
 	
+	@Inject
+	private UporabnikService uporabnikService;
+	
 	@Override
 	public String generirajZeton(Uporabnik uporabnik) {
 		try {
@@ -32,8 +41,9 @@ public class ZetonServiceImpl implements ZetonService {
 					.setSubject(JWTSubject)
 					.setIssuedAt(new Date())
 					.setExpiration(expirationDate)
+					.claim("uporabnik_ime", uporabnik.getUporabniskoIme())
 					.claim("vloge", uporabnik.getVloge())
-					.claim("uporabnik", uporabnik.getId())
+					.claim("uporabnik_id", uporabnik.getId())
 					.signWith(SignatureAlgorithm.HS256, secretKey.getBytes("UTF-8"))
 					.compact();
 			return token;
@@ -70,5 +80,22 @@ public class ZetonServiceImpl implements ZetonService {
 			e4.printStackTrace();
 			return null;
 		}
+	}
+	
+	@Override
+	public Uporabnik pridobiUporabnikaIzZetona(HttpServletRequest req) throws NiPravicException {
+		String authorizationField = req.getHeader(HEADER_STRING);
+		if(authorizationField == null) {
+			throw new NiPravicException();
+		}
+		
+		String token = authorizationField.replace(TOKEN_PREFIX, "");
+		
+		Claims podatkiZeton = this.validirajZetonInVrniPodatke(token);
+		
+		long idUporabnika = Long.parseLong(podatkiZeton.get("uporabnik").toString());
+		Uporabnik uporabnik = uporabnikService.poisciZId(idUporabnika);
+		
+		return uporabnik;
 	}
 }
