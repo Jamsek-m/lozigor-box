@@ -1,11 +1,12 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from "@angular/common/http";
-import {PrijavaRequest} from "../models/requests/PrijavaRequest";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {PrijavaRequest} from "../../models/requests/PrijavaRequest";
 
 import "rxjs/add/operator/toPromise";
-import {TokenData} from "../models/token/TokenData";
 import {Observable} from "rxjs/Observable";
-import {TrenutniUporabnik} from "../models/token/TrenutniUporabnik";
+import {NavbarService} from "../navbar.service";
+import {TrenutniUporabnik} from "../../models/token/TrenutniUporabnik";
+import {TokenData} from "../../models/token/TokenData";
 
 @Injectable()
 export class AuthService {
@@ -13,7 +14,7 @@ export class AuthService {
     private URL_AVTENTIKACIJA = "http://localhost:8080/api/v1/prijava";
     private headers = new HttpHeaders({"Content-Type": "application/json"});
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private navbar: NavbarService) {
         
     }
 
@@ -43,6 +44,8 @@ export class AuthService {
             .then(
                 res => {
                     this.shraniZeton(res["zeton"]);
+                    const novi = this.pridobiTrenutnegaUporabnika();
+                    this.navbar.sporociDaJeUporabnikPrijavljen(true, novi);
                 }
             );
     }
@@ -72,6 +75,7 @@ export class AuthService {
     }
 
     public odjaviUporabnika() {
+        this.navbar.sporociDaJeUporabnikPrijavljen(false, null);
         localStorage.removeItem(this.TOKEN_STORAGE_NAME);
     }
 

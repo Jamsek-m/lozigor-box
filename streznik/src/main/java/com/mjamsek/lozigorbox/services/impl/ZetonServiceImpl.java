@@ -93,7 +93,7 @@ public class ZetonServiceImpl implements ZetonService {
 		
 		Claims podatkiZeton = this.validirajZetonInVrniPodatke(token);
 		
-		long idUporabnika = Long.parseLong(podatkiZeton.get("uporabnik").toString());
+		long idUporabnika = Long.parseLong(podatkiZeton.get("uporabnik_id").toString());
 		Uporabnik uporabnik = uporabnikService.poisciZId(idUporabnika);
 		
 		return uporabnik;

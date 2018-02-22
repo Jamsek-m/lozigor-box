@@ -1,12 +1,13 @@
 import {Component, OnInit} from "@angular/core";
 import {PrijavaRequest} from "../models/requests/PrijavaRequest";
-import {AuthService} from "../services/auth.service";
+import {AuthService} from "../services/auth/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
     moduleId: module.id,
     selector: "app-login-page",
-    templateUrl: "prijava.component.html"
+    templateUrl: "prijava.component.html",
+    styleUrls: ["./prijava.component.css"]
 })
 export class PrijavaComponent implements OnInit {
     uporabnik: PrijavaRequest;

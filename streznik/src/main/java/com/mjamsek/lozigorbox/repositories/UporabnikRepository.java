@@ -9,6 +9,6 @@ public interface UporabnikRepository extends JpaRepository<Uporabnik, Long> {
 	
 	public Uporabnik findByEmail(String email);
 	
-	
+	public long countByEmail(String email);
 	
 }

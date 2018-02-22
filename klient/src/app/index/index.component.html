@@ -12,13 +12,4 @@
 
         </ul>
     </div>
-
-    <div *ngIf="trenutniUporabnik == null">
-        <a (click)="preusmeriNaPrijavo()" routerLink="">Prijava</a>
-    </div>
-    <div *ngIf="trenutniUporabnik != null">
-        <a routerLink="" (click)="odjava()">Odjava</a>
-    </div>
-
-
 </div>

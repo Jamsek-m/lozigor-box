@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {AuthService} from "../services/auth.service";
+import {AuthService} from "../services/auth/auth.service";
 import {Router} from "@angular/router";
 import {TrenutniUporabnik} from "../models/token/TrenutniUporabnik";
 
@@ -21,7 +21,7 @@ export class IndexComponent implements OnInit {
             const currUser: TrenutniUporabnik = this.trenutniUporabnik;
             msg += currUser.ime;
         } else {
-            msg += "svet!";
+            msg += "anon!";
         }
         this.nastaviSporocilo(msg);
     }
@@ -34,8 +34,8 @@ export class IndexComponent implements OnInit {
         this.router.navigate(["/prijava"]);
     }
 
-    odjava() {
+    /*odjava() {
         this.auth.odjaviUporabnika();
         this.router.navigateByUrl("/prijava");
-    }
+    }*/
 }

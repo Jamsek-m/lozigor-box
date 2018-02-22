@@ -9,11 +9,16 @@ import {IndexComponent} from "./index/index.component";
 import {AppRoutingModule} from "./app-routing.module";
 import {BootstrapModule} from "./bootstrap.module";
 import {PrijavaComponent} from "./prijava/prijava.component";
-import {AuthService} from "./services/auth.service";
-import {AuthGuard} from "./services/auth.guard";
+import {AuthService} from "./services/auth/auth.service";
+import {AuthGuard} from "./services/auth/auth.guard";
 import {NiPravicComponent} from "./napake/401/ni.pravic.component";
 import {NeObstajaComponent} from "./napake/404/ne.obstaja.component";
 import {AngularFontAwesomeModule} from "angular-font-awesome";
+import {NavbarService} from "./services/navbar.service";
+import {AdminRoleGuard} from "./services/auth/admin.role.guard";
+import {ModRoleGuard} from "./services/auth/mod.role.guard";
+import {UporabnikiService} from "./services/uporabniki/uporabniki.service";
+import {ProfilComponent} from "./profil/profil.component";
 
 
 @NgModule({
@@ -23,7 +28,8 @@ import {AngularFontAwesomeModule} from "angular-font-awesome";
         IndexComponent,
         PrijavaComponent,
         NiPravicComponent,
-        NeObstajaComponent
+        NeObstajaComponent,
+        ProfilComponent
     ],
     imports: [
         BrowserModule,
@@ -33,7 +39,7 @@ import {AngularFontAwesomeModule} from "angular-font-awesome";
         BootstrapModule,
         AngularFontAwesomeModule
     ],
-    providers: [AuthService, AuthGuard],
+    providers: [UporabnikiService, AuthService, AuthGuard, AdminRoleGuard, ModRoleGuard, NavbarService],
     bootstrap: [OgrodjeComponent]
 })
 export class AppModule {

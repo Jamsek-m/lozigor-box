@@ -22,7 +22,7 @@ public class ExceptionMapper extends ResponseEntityExceptionHandler {
 	}
 	
 	@ExceptionHandler(value = {ExpiredJwtException.class})
-	protected  ResponseEntity<Object> expiredZeton(ExpiredJwtException ex, WebRequest req) {
+	protected ResponseEntity<Object> expiredZeton(ExpiredJwtException ex, WebRequest req) {
 		HttpStatus status = HttpStatus.UNAUTHORIZED;
 		ExceptionResponse res = new ExceptionResponse(ex.getMessage(), status.value());
 		
@@ -30,7 +30,7 @@ public class ExceptionMapper extends ResponseEntityExceptionHandler {
 	}
 	
 	@ExceptionHandler(value = {NapacnaPrijavaException.class})
-	protected  ResponseEntity<Object> expiredZeton(NapacnaPrijavaException ex, WebRequest req) {
+	protected ResponseEntity<Object> expiredZeton(NapacnaPrijavaException ex, WebRequest req) {
 		HttpStatus status = HttpStatus.UNAUTHORIZED;
 		ExceptionResponse res = new ExceptionResponse(ex.getMessage(), status.value());
 		
@@ -38,8 +38,24 @@ public class ExceptionMapper extends ResponseEntityExceptionHandler {
 	}
 	
 	@ExceptionHandler(value = {NiPravicException.class})
-	protected  ResponseEntity<Object> expiredZeton(NiPravicException ex, WebRequest req) {
+	protected ResponseEntity<Object> expiredZeton(NiPravicException ex, WebRequest req) {
 		HttpStatus status = HttpStatus.FORBIDDEN;
+		ExceptionResponse res = new ExceptionResponse(ex.getMessage(), status.value());
+		
+		return handleExceptionInternal(ex, res, new HttpHeaders(), status, req);
+	}
+	
+	@ExceptionHandler(value = {GesliSeNeUjemataException.class})
+	protected ResponseEntity<Object> gesliSeNeUjemata(GesliSeNeUjemataException ex, WebRequest req) {
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		ExceptionResponse res = new ExceptionResponse(ex.getMessage(), status.value());
+		
+		return handleExceptionInternal(ex, res, new HttpHeaders(), status, req);
+	}
+	
+	@ExceptionHandler(value = {EmailZeObstajaException.class})
+	protected ResponseEntity<Object> emailZeObstaja(EmailZeObstajaException ex, WebRequest req) {
+		HttpStatus status = HttpStatus.CONFLICT;
 		ExceptionResponse res = new ExceptionResponse(ex.getMessage(), status.value());
 		
 		return handleExceptionInternal(ex, res, new HttpHeaders(), status, req);

@@ -1,1 +1,25 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Klient</title><base href="/"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/x-icon" href="favicon.ico"><link href="styles.4578fb84c098db0abffb.bundle.css" rel="stylesheet"/></head><body><app-root>Loading app...</app-root><script type="text/javascript" src="inline.d19de6d308cef3d8fc88.bundle.js"></script><script type="text/javascript" src="polyfills.f20484b2fa4642e0dca8.bundle.js"></script><script type="text/javascript" src="main.2df064691d9acf5ccbb6.bundle.js"></script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Klient</title><base href="/"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/x-icon" href="favicon.ico"><style>.loading-screen {
+            opacity: 0;
+            transition: opacity .8s ease-in-out;
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background: #000;
+            z-index: -1;
+        }
+
+        app-root:empty + .loading-screen {
+            opacity: 1;
+            z-index: 100;
+        }
+
+        app-root:empty + .loading-screen h1 {
+            color: #eee;
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            text-align: center;
+            transform: translate(0, -50%);
+        }</style><link href="styles.7de8b0db959d68651baf.bundle.css" rel="stylesheet"/></head><body><app-root></app-root><div class="loading-screen"><h1>Loading...</h1></div><script type="text/javascript" src="inline.e02d4f73277f8c8ea76d.bundle.js"></script><script type="text/javascript" src="polyfills.f20484b2fa4642e0dca8.bundle.js"></script><script type="text/javascript" src="main.3523537300e6fb26e226.bundle.js"></script></body></html>

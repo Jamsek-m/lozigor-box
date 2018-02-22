@@ -1,0 +1,6 @@
+label {
+    font-weight: bold;
+}
+button[type="submit"], button[type="reset"] {
+    width: 20%;
+}

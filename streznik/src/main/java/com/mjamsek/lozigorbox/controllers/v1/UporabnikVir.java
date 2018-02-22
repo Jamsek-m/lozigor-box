@@ -1,28 +1,51 @@
 package com.mjamsek.lozigorbox.controllers.v1;
 
+import com.mjamsek.lozigorbox.entities.exceptions.EmailZeObstajaException;
+import com.mjamsek.lozigorbox.entities.exceptions.GesliSeNeUjemataException;
 import com.mjamsek.lozigorbox.entities.exceptions.NiPravicException;
+import com.mjamsek.lozigorbox.entities.requests.UporabnikUpdateRequest;
+import com.mjamsek.lozigorbox.entities.uporabnik.Uporabnik;
 import com.mjamsek.lozigorbox.security.anotacije.ImaVlogo;
 import com.mjamsek.lozigorbox.security.anotacije.JeAvtenticiran;
 import com.mjamsek.lozigorbox.security.config.Vloge;
+import com.mjamsek.lozigorbox.services.UporabnikService;
 import com.mjamsek.lozigorbox.services.ZetonService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/uporabniki")
 public class UporabnikVir {
 	
 	@Inject
 	private ZetonService zetonService;
 	
-	@GetMapping("/admin")
+	@Inject
+	private UporabnikService uporabnikService;
+	
+	@GetMapping("/profil")
+	@JeAvtenticiran
+	public ResponseEntity<Uporabnik> vrniSvojePodrobnosti(HttpServletRequest req) throws NiPravicException {
+		Uporabnik uporabnik = this.zetonService.pridobiUporabnikaIzZetona(req);
+		return ResponseEntity.ok(uporabnik);
+	}
+	
+	@PutMapping("/profil")
+	@JeAvtenticiran
+	public ResponseEntity posodobiSvojePodrobnosti(
+			@RequestBody UporabnikUpdateRequest requestBody,
+			HttpServletRequest req) throws NiPravicException, GesliSeNeUjemataException, EmailZeObstajaException {
+		Uporabnik uporabnik = this.zetonService.pridobiUporabnikaIzZetona(req);
+		this.uporabnikService.posodobiUporabnika(uporabnik, requestBody);
+		return ResponseEntity.noContent().build();
+	}
+	
+	// PRIMERI UPORABE AVTENTIKACIJE:
+	/*@GetMapping("/admin")
 	@ImaVlogo({Vloge.ADMIN})
 	public ResponseEntity<String> adminPage(HttpServletRequest req) throws NiPravicException{
 		return ResponseEntity.ok().body("To je stran samo za ADMINE!\nPozdravljen, " + zetonService.pridobiUporabnikaIzZetona(req).getUporabniskoIme());
@@ -44,6 +67,6 @@ public class UporabnikVir {
 	public ResponseEntity<String> publicPage() {
 		return ResponseEntity.ok().body("To je stran za VSE!");
 	}
-	
+	*/
 }
 
