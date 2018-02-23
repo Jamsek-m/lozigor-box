@@ -33,7 +33,7 @@ export class UporabnikiService {
     }
 
     private generateHeaders(): HttpHeaders {
-    return new HttpHeaders({
+        return new HttpHeaders({
             "Content-Type": "application/json",
             "Authorization": "Bearer " + this.auth.vrniZeton()
         });

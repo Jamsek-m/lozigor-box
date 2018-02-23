@@ -18,4 +18,5 @@ public interface UporabnikService {
 	public void shraniUporabnika(Uporabnik uporabnik);
 	
 	public void posodobiUporabnika(Uporabnik header, UporabnikUpdateRequest body) throws GesliSeNeUjemataException, EmailZeObstajaException;
+	
 }

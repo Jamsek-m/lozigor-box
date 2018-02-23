@@ -3,6 +3,7 @@ package com.mjamsek.lozigorbox.controllers.v1;
 import com.mjamsek.lozigorbox.entities.datoteka.Datoteka;
 import com.mjamsek.lozigorbox.entities.menu.MenuItem;
 import com.mjamsek.lozigorbox.entities.requests.Direktorij;
+import com.mjamsek.lozigorbox.entities.responses.MenuItemResponse;
 import com.mjamsek.lozigorbox.services.MenuItemService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,15 +22,20 @@ public class MenuVir {
 	private MenuItemService menuItemService;
 	
 	@GetMapping("/root")
-	public ResponseEntity<List<MenuItem>> posredujPrvoStranMenuja() {
-		List<MenuItem> items = menuItemService.pridobiPrvoStran();
+	public ResponseEntity<MenuItemResponse> posredujPrvoStranMenuja() {
+		MenuItemResponse items = menuItemService.pridobiPrvoStran();
 		return ResponseEntity.ok(items);
 	}
 	
 	@GetMapping("/dir/{id}")
-	public ResponseEntity<List<MenuItem>> posredujDirektorij(@PathVariable("id") long id) {
-		List<MenuItem> items = menuItemService.pridobiOtrokeElementa(id);
+	public ResponseEntity<MenuItemResponse> posredujDirektorij(@PathVariable("id") long id) {
+		MenuItemResponse items = menuItemService.pridobiOtrokeElementa(id);
 		return ResponseEntity.ok(items);
+	}
+	
+	@GetMapping("/dir")
+	public ResponseEntity<List<MenuItem>> poisciZPodanimKljucem(@RequestParam("query") String query) {
+		return ResponseEntity.ok(this.menuItemService.poisciZQueryjem(query));
 	}
 	
 	@PostMapping("/dir")
@@ -43,6 +49,5 @@ public class MenuVir {
 		}
 		return ResponseEntity.created(uri).body(dir);
 	}
-	
 	
 }

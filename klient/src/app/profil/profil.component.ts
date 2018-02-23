@@ -38,7 +38,7 @@ export class ProfilComponent implements OnInit {
             profilUporabnik.uporabniskoIme = uporabnik.uporabniskoIme;
             this.profil = profilUporabnik;
             this.vloge = `[ ${profilUporabnik.vloge.map((vloga: Vloga) => vloga.naziv).join(", ")} ]`;
-        } );
+        });
     }
 
     posodobiProfil(): void {

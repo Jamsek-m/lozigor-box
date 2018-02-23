@@ -1,5 +1,6 @@
 package com.mjamsek.lozigorbox.entities.menu;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mjamsek.lozigorbox.entities.datoteka.Datoteka;
 import com.mjamsek.lozigorbox.entities.dovoljenja.Skupina;
 import org.springframework.data.jpa.repository.Query;
@@ -32,6 +33,7 @@ public class MenuItem {
 	@JoinColumn(name = "file_id")
 	private Datoteka file;
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(
 			name = "item_skupine",

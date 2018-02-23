@@ -4,6 +4,7 @@ import com.mjamsek.lozigorbox.entities.datoteka.Datoteka;
 import com.mjamsek.lozigorbox.entities.menu.MenuItem;
 import com.mjamsek.lozigorbox.entities.menu.MenuItemType;
 import com.mjamsek.lozigorbox.entities.requests.Direktorij;
+import com.mjamsek.lozigorbox.entities.responses.MenuItemResponse;
 import com.mjamsek.lozigorbox.repositories.MenuItemRepository;
 import com.mjamsek.lozigorbox.services.MenuItemService;
 import org.springframework.stereotype.Service;
@@ -23,13 +24,28 @@ public class MenuItemServiceImpl implements MenuItemService {
 	}
 	
 	@Override
-	public List<MenuItem> pridobiPrvoStran() {
-		return menuItemRepository.findAllByParent(pridobiKorenskiElement().getId());
+	public MenuItemResponse pridobiPrvoStran() {
+		MenuItem korenski = pridobiKorenskiElement();
+		MenuItemResponse response = new MenuItemResponse(
+				korenski.getId(), korenski.getParent(), korenski.getIme(),
+				menuItemRepository.findAllByParent(korenski.getId())
+		);
+		return response;
 	}
 	
 	@Override
-	public List<MenuItem> pridobiOtrokeElementa(long id) {
-		return menuItemRepository.findAllByParent(id);
+	public MenuItemResponse pridobiOtrokeElementa(long id) {
+		MenuItem item = menuItemRepository.findOne(id);
+		MenuItemResponse response = new MenuItemResponse(
+				item.getId(), item.getParent(), item.getIme(),
+				menuItemRepository.findAllByParent(item.getId())
+		);
+		return response;
+	}
+	
+	@Override
+	public List<MenuItem> poisciZQueryjem(String query) {
+		return this.menuItemRepository.poisciZQueryjem(query);
 	}
 	
 	@Override

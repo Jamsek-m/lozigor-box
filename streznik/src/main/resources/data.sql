@@ -15,7 +15,8 @@ INSERT INTO datoteka(content_type, ext, ime, lokacija, uploaded, velikost)
     ,('text/plain', 'txt', 'file.2.1', 'file.2.1.txt', '2018-02-21 15:51:11', 0)
     ,('text/plain', 'txt', 'file.2.2', 'file.2.2.txt', '2018-02-21 15:51:11', 0)
     ,('text/plain', 'txt', 'file.3.1.1', 'file.3.1.1.txt', '2018-02-21 15:51:11', 0)
-    ,('text/plain', 'txt', 'file.3.1', 'file.3.1.txt', '2018-02-21 15:51:11', 0);
+    ,('text/plain', 'txt', 'file.3.1', 'file.3.1.txt', '2018-02-21 15:51:11', 0)
+    ,('image/jpeg', 'jpg', 'slika', 'slika.jpg', '2018-02-23 22:30:47', 91449);
 
 -- testni meni
 INSERT INTO menu_item(ime, num_of_childs, parent, tip, file_id)
@@ -29,7 +30,8 @@ INSERT INTO menu_item(ime, num_of_childs, parent, tip, file_id)
       , (null, 0, 3, 'FILE', 2)
       , (null, 0, 3, 'FILE', 3)
       , (null, 0, 5, 'FILE', 4)
-      , (null, 0, 4, 'FILE', 5);
+      , (null, 0, 4, 'FILE', 5)
+      , (null, 0, 1, 'FILE', 6);
 
 INSERT INTO dovoljenje_tip(naziv, sifra)
   VALUES ('Nalaganje', 'UPLOAD')

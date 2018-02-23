@@ -3,6 +3,7 @@ package com.mjamsek.lozigorbox.services;
 import com.mjamsek.lozigorbox.entities.datoteka.Datoteka;
 import com.mjamsek.lozigorbox.entities.menu.MenuItem;
 import com.mjamsek.lozigorbox.entities.requests.Direktorij;
+import com.mjamsek.lozigorbox.entities.responses.MenuItemResponse;
 
 import java.util.List;
 
@@ -12,9 +13,11 @@ public interface MenuItemService {
 	
 	public MenuItem pridobiKorenskiElement();
 	
-	public List<MenuItem> pridobiPrvoStran();
+	public MenuItemResponse pridobiPrvoStran();
 	
-	public List<MenuItem> pridobiOtrokeElementa(long id);
+	public MenuItemResponse pridobiOtrokeElementa(long id);
+	
+	public List<MenuItem> poisciZQueryjem(String query);
 	
 	public void dodajDirektorij(Direktorij dir);
 	

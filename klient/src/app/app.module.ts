@@ -19,6 +19,8 @@ import {AdminRoleGuard} from "./services/auth/admin.role.guard";
 import {ModRoleGuard} from "./services/auth/mod.role.guard";
 import {UporabnikiService} from "./services/uporabniki/uporabniki.service";
 import {ProfilComponent} from "./profil/profil.component";
+import {MenuService} from "./services/menu.service";
+import {FileService} from "./services/files/file.service";
 
 
 @NgModule({
@@ -39,7 +41,7 @@ import {ProfilComponent} from "./profil/profil.component";
         BootstrapModule,
         AngularFontAwesomeModule
     ],
-    providers: [UporabnikiService, AuthService, AuthGuard, AdminRoleGuard, ModRoleGuard, NavbarService],
+    providers: [UporabnikiService, MenuService, FileService, AuthService, AuthGuard, AdminRoleGuard, ModRoleGuard, NavbarService],
     bootstrap: [OgrodjeComponent]
 })
 export class AppModule {
