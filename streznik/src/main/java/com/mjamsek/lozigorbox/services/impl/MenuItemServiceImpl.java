@@ -34,6 +34,16 @@ public class MenuItemServiceImpl implements MenuItemService {
 	}
 	
 	@Override
+	public MenuItemResponse pridobiZavarovanoPrvoStran() {
+		List<MenuItem> items = menuItemRepository.poisciVseIzMapeZPravico();
+		
+		MenuItem korenski = pridobiKorenskiElement();
+		MenuItemResponse response = new MenuItemResponse(
+				korenski.getId(), korenski.getParent(), korenski.getIme(), items);
+		return response;
+	}
+	
+	@Override
 	public MenuItemResponse pridobiOtrokeElementa(long id) {
 		MenuItem item = menuItemRepository.findOne(id);
 		MenuItemResponse response = new MenuItemResponse(

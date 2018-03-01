@@ -1,0 +1,13 @@
+select /*case (count(*))
+when 0 then false
+else true end as rezultat*/ *
+from clanstvo_skupin cs
+inner join skupine_dovoljenja sd
+	on cs.skupina_id = sd.skupina_id
+where cs.upb_id = 1
+and sd.dovoljenje_id = (
+						select id 
+						from dovoljenje 
+                        where item_id = 3 
+                        and tip = 2
+                        );

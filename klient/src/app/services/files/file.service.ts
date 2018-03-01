@@ -19,9 +19,28 @@ export class FileService {
         });
     }
 
+    public shraniFile(parent_id: number, files: FileList) {
+        const url = this.URL_FILES;
+        const forma: FormData = new FormData();
+        forma.append("parent", parent_id.toString());
+        for (let i = 0; i < files.length; i++) {
+            forma.append("files", files.item(i), files.item(i).name);
+        }
+        return this.http.post(url, forma, {headers: this.generirajTokenMultipart()})
+            .toPromise()
+            .then(res => console.log("datoteke so uploadane"))
+            .catch(err => console.log("NAPAKA: ", err));
+    }
+
     private generirajToken(): HttpHeaders {
         return new HttpHeaders({
             "Content-Type": "application/json",
+            "Authorization": "Bearer " + this.auth.vrniZeton()
+        });
+    }
+
+    private generirajTokenMultipart(): HttpHeaders {
+        return new HttpHeaders({
             "Authorization": "Bearer " + this.auth.vrniZeton()
         });
     }

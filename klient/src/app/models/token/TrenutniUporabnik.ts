@@ -1,7 +1,7 @@
 import {Vloga} from "./TokenData";
 
 export class TrenutniUporabnik {
-    id: number;
-    ime: string;
-    vloge: [Vloga];
+    public id: number;
+    public ime: string;
+    public vloge: [Vloga];
 }

@@ -15,6 +15,8 @@ public interface MenuItemService {
 	
 	public MenuItemResponse pridobiPrvoStran();
 	
+	public MenuItemResponse pridobiZavarovanoPrvoStran();
+	
 	public MenuItemResponse pridobiOtrokeElementa(long id);
 	
 	public List<MenuItem> poisciZQueryjem(String query);

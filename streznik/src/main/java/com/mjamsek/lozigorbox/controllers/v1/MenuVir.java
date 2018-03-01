@@ -4,6 +4,8 @@ import com.mjamsek.lozigorbox.entities.datoteka.Datoteka;
 import com.mjamsek.lozigorbox.entities.menu.MenuItem;
 import com.mjamsek.lozigorbox.entities.requests.Direktorij;
 import com.mjamsek.lozigorbox.entities.responses.MenuItemResponse;
+import com.mjamsek.lozigorbox.security.anotacije.ImaVlogo;
+import com.mjamsek.lozigorbox.security.config.Vloge;
 import com.mjamsek.lozigorbox.services.MenuItemService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +40,14 @@ public class MenuVir {
 		return ResponseEntity.ok(this.menuItemService.poisciZQueryjem(query));
 	}
 	
+	@GetMapping("/test")
+	public ResponseEntity<MenuItemResponse> posredujPrvoStranMenujaSECURE() {
+		MenuItemResponse items = menuItemService.pridobiZavarovanoPrvoStran();
+		return ResponseEntity.ok(items);
+	}
+	
 	@PostMapping("/dir")
+	@ImaVlogo({Vloge.ADMIN, Vloge.MOD})
 	public ResponseEntity kreirajDirektorij(@RequestBody Direktorij dir) {
 		menuItemService.dodajDirektorij(dir);
 		URI uri = null;

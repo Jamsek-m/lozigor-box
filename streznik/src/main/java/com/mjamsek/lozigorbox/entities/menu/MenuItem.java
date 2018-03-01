@@ -2,8 +2,8 @@ package com.mjamsek.lozigorbox.entities.menu;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mjamsek.lozigorbox.entities.datoteka.Datoteka;
-import com.mjamsek.lozigorbox.entities.dovoljenja.Skupina;
-import org.springframework.data.jpa.repository.Query;
+import com.mjamsek.lozigorbox.entities.dovoljenja.Dovoljenje;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -22,7 +22,7 @@ public class MenuItem {
 	@Column
 	private String ime;
 	
-	@Column
+	@Formula("(SELECT COUNT(*) FROM menu_item m WHERE m.parent = id)")
 	private long num_of_childs;
 	
 	@Enumerated(EnumType.STRING)
@@ -36,21 +36,13 @@ public class MenuItem {
 	@JsonIgnore
 	@ManyToMany
 	@JoinTable(
-			name = "item_skupine",
+			name = "item_dovoljenja",
 			joinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "skupina_id", referencedColumnName = "id")
+			inverseJoinColumns = @JoinColumn(name = "dovoljenje_id", referencedColumnName = "id")
 	)
-	private Set<Skupina> skupine;
+	private Set<Dovoljenje> dovoljenja;
 	
 	public MenuItem() {
-	}
-	
-	public Set<Skupina> getSkupine() {
-		return skupine;
-	}
-	
-	public void setSkupine(Set<Skupina> skupine) {
-		this.skupine = skupine;
 	}
 	
 	public String getIme() {
@@ -99,5 +91,13 @@ public class MenuItem {
 	
 	public void setFile(Datoteka file) {
 		this.file = file;
+	}
+	
+	public Set<Dovoljenje> getDovoljenja() {
+		return dovoljenja;
+	}
+	
+	public void setDovoljenja(Set<Dovoljenje> dovoljenja) {
+		this.dovoljenja = dovoljenja;
 	}
 }

@@ -6,8 +6,8 @@ INSERT INTO uporabnik(email, geslo, upb_ime)
 INSERT INTO uporabniske_vloge(upb_id, vloga_id) VALUES (1, 1), (1, 3),(2, 1);
 
 -- korenski nivo menija
-INSERT INTO menu_item(ime, num_of_childs, parent, tip, file_id)
-  VALUES ('ROOT_DIR', 0, 0, 'DIR', null);
+INSERT INTO menu_item(ime, parent, tip, file_id)
+  VALUES ('ROOT_DIR', 0, 'DIR', null);
 
 -- testne datoteke
 INSERT INTO datoteka(content_type, ext, ime, lokacija, uploaded, velikost)
@@ -19,20 +19,21 @@ INSERT INTO datoteka(content_type, ext, ime, lokacija, uploaded, velikost)
     ,('image/jpeg', 'jpg', 'slika', 'slika.jpg', '2018-02-23 22:30:47', 91449);
 
 -- testni meni
-INSERT INTO menu_item(ime, num_of_childs, parent, tip, file_id)
-  VALUES ('mapa 1', 0, 1, 'DIR', null)
-    , ('mapa 2', 0, 1, 'DIR', null)
-    , ('mapa 3', 0, 1, 'DIR', null)
-    , ('mapa 3.1', 0, 4, 'DIR', null);
+INSERT INTO menu_item(ime,  parent, tip, file_id)
+  VALUES ('mapa 1', 1, 'DIR', null)
+    , ('mapa 2', 1, 'DIR', null)
+    , ('mapa 3', 1, 'DIR', null)
+    , ('mapa 3.1', 4, 'DIR', null);
 
-INSERT INTO menu_item(ime, num_of_childs, parent, tip, file_id)
-    VALUES (null, 0, 2, 'FILE', 1)
-      , (null, 0, 3, 'FILE', 2)
-      , (null, 0, 3, 'FILE', 3)
-      , (null, 0, 5, 'FILE', 4)
-      , (null, 0, 4, 'FILE', 5)
-      , (null, 0, 1, 'FILE', 6);
+INSERT INTO menu_item(ime, parent, tip, file_id)
+    VALUES (null, 2, 'FILE', 1)
+      , (null, 3, 'FILE', 2)
+      , (null, 3, 'FILE', 3)
+      , (null, 5, 'FILE', 4)
+      , (null, 4, 'FILE', 5)
+      , (null, 1, 'FILE', 6);
 
+-- testna dovoljenja
 INSERT INTO dovoljenje_tip(naziv, sifra)
   VALUES ('Nalaganje', 'UPLOAD')
       , ('Prenos', 'DOWNLOAD')
@@ -40,15 +41,30 @@ INSERT INTO dovoljenje_tip(naziv, sifra)
 
 INSERT INTO skupina(naziv, sifra)
   VALUES ('Javno', 'PUBLIC')
-        ,('Uporabnik', 'USER_1');
+        ,('Uporabnik_1', 'USER_1')
+        ,('Uporabnik_2', 'USER_2')
+        ,('Uporabniki', 'USERS');
 
 INSERT INTO clanstvo_skupin(skupina_id, upb_id)
-    VALUES (1, 1), (2, 1);
+    VALUES (1, 1), (2, 1), (1, 2), (3, 2);
 
-INSERT INTO dovoljenje(tip) VALUES (1),(2),(3);
+INSERT INTO dovoljenje(tip, skupina_id) VALUES
+   (2, 1)
+  ,(1, 2)
+  ,(2, 2)
+  ,(3, 2)
+  ,(1, 3);
 
-INSERT INTO skupine_dovoljenja(skupina_id, dovoljenje_id)
-    VALUES (1, 2), (2, 1), (2, 2), (2, 3);
+INSERT INTO item_dovoljenja(item_id, dovoljenje_id) VALUES
+   (1, 1)
+  ,(2, 2)
+  ,(3, 1)
+  ,(4, 1)
+  ,(5, 1)
+  ,(5, 2)
+  ,(6, 2)
+  ,(7, 3)
+  ,(8, 3)
+  ,(9, 3)
+  ,(10, 1);
 
-INSERT INTO item_skupine(item_id, skupina_id)
-    VALUES (2, 1),(6, 1), (3, 2), (7, 2), (8, 2), (4, 1), (5, 1), (9, 1), (10, 2);

@@ -9,7 +9,6 @@
     <packaging>jar</packaging>
 
     <name>lozigor-box</name>
-    <description></description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -55,7 +54,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>RELEASE</version>
         </dependency>
         <dependency>
             <groupId>javax.inject</groupId>
@@ -83,6 +81,23 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>copy-sql-files</id>
+                        <phase>validate</phase>
+                        <goals><goal>copy-resources</goal></goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>
+                                        ${basedir}/src/main/resources/sql_files/prod
+                                    </directory>
+                                </resource>
+                            </resources>
+                            <outputDirectory>
+                                ${basedir}/target/
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>copy-resources</id>
                         <phase>validate</phase>
                         <goals><goal>copy-resources</goal></goals>
@@ -104,6 +119,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>

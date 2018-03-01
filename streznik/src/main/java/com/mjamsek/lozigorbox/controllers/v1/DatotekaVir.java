@@ -1,6 +1,8 @@
 package com.mjamsek.lozigorbox.controllers.v1;
 
 import com.mjamsek.lozigorbox.entities.datoteka.Datoteka;
+import com.mjamsek.lozigorbox.security.anotacije.ImaVlogo;
+import com.mjamsek.lozigorbox.security.config.Vloge;
 import com.mjamsek.lozigorbox.services.DatotekaService;
 import com.mjamsek.lozigorbox.services.FileService;
 import org.springframework.core.io.Resource;
@@ -32,7 +34,8 @@ public class DatotekaVir {
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, attachment).body(file);
 	}
 	
-	@PostMapping({"", "/"})
+	@PostMapping(value = {"", "/"}, headers = "Content-Type=multipart/form-data")
+	@ImaVlogo({Vloge.ADMIN, Vloge.MOD})
 	public ResponseEntity shraniDatoteko(
 			@RequestParam("files")MultipartFile[] files,
 			@RequestParam("parent") long parent

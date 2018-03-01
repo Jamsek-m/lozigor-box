@@ -21,6 +21,7 @@ import {UporabnikiService} from "./services/uporabniki/uporabniki.service";
 import {ProfilComponent} from "./profil/profil.component";
 import {MenuService} from "./services/menu.service";
 import {FileService} from "./services/files/file.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 
 @NgModule({
@@ -41,7 +42,16 @@ import {FileService} from "./services/files/file.service";
         BootstrapModule,
         AngularFontAwesomeModule
     ],
-    providers: [UporabnikiService, MenuService, FileService, AuthService, AuthGuard, AdminRoleGuard, ModRoleGuard, NavbarService],
+    providers: [
+        UporabnikiService,
+        MenuService,
+        FileService,
+        AuthService,
+        AuthGuard,
+        AdminRoleGuard,
+        ModRoleGuard,
+        NavbarService
+    ],
     bootstrap: [OgrodjeComponent]
 })
 export class AppModule {

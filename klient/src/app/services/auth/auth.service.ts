@@ -14,9 +14,7 @@ export class AuthService {
     private URL_AVTENTIKACIJA = "http://localhost:8080/api/v1/prijava";
     private headers = new HttpHeaders({"Content-Type": "application/json"});
 
-    constructor(private http: HttpClient, private navbar: NavbarService) {
-        
-    }
+    constructor(private http: HttpClient, private navbar: NavbarService) {}
 
     public static b64ToUtf8(niz: string): string {
         return decodeURIComponent(Array.prototype.map.call(atob(niz), (c) => {
@@ -24,7 +22,7 @@ export class AuthService {
         }).join(""));
     }
 
-    private static parseZeton(token: string) {
+    private static parseZeton(token: string): any {
         return JSON.parse(AuthService.b64ToUtf8(token.split(".")[1]));
     }
 
@@ -36,7 +34,7 @@ export class AuthService {
         return localStorage.getItem(this.TOKEN_STORAGE_NAME);
     }
 
-    public prijaviUporabnika(uporabnik: PrijavaRequest) {
+    public prijaviUporabnika(uporabnik: PrijavaRequest): Promise<any> {
         const podatki = JSON.stringify(uporabnik);
         return this.http
             .post(this.URL_AVTENTIKACIJA, podatki, {headers: this.headers})
@@ -74,14 +72,23 @@ export class AuthService {
         }
     }
 
-    public odjaviUporabnika() {
+    public odjaviUporabnika(): void {
         this.navbar.sporociDaJeUporabnikPrijavljen(false, null);
         localStorage.removeItem(this.TOKEN_STORAGE_NAME);
     }
 
-    private handleError(err: HttpErrorResponse | any) {
+    public imaVlogo(sifra: string): boolean {
+        if (this.jePrijavljen()) {
+            return this.pridobiTrenutnegaUporabnika().vloge
+                .map(item => item.sifra)
+                .filter(item => item === sifra).length === 1;
+        }
+        return false;
+    }
+
+    /**private handleError(err: HttpErrorResponse | any) {
         console.error("Prišlo je od napake! ", err);
         return Observable.throw(err.name || err);
-    }
+    }*/
 
 }

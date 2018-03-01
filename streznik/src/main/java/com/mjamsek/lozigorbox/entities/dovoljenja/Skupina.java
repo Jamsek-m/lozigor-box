@@ -19,14 +19,6 @@ public class Skupina {
 	@Column
 	private String naziv;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(
-			name = "skupine_dovoljenja",
-			joinColumns = @JoinColumn(name = "skupina_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "dovoljenje_id", referencedColumnName = "id")
-	)
-	private Set<Dovoljenje> dovoljenja;
-	
 	@ManyToMany
 	@JoinTable(
 			name = "clanstvo_skupin",
@@ -35,14 +27,17 @@ public class Skupina {
 	)
 	private Set<Uporabnik> clani;
 	
+	@OneToMany(mappedBy = "skupina", cascade = CascadeType.ALL)
+	private Set<Dovoljenje> dovoljenja;
+	
 	public Skupina() {
 	}
 	
-	public Skupina(String sifra, String naziv, Set<Dovoljenje> dovoljenja, Set<Uporabnik> clani) {
+	public Skupina(String sifra, String naziv, Set<Uporabnik> clani, Set<Dovoljenje> dovoljenja) {
 		this.sifra = sifra;
 		this.naziv = naziv;
-		this.dovoljenja = dovoljenja;
 		this.clani = clani;
+		this.dovoljenja = dovoljenja;
 	}
 	
 	public long getId() {
@@ -69,19 +64,19 @@ public class Skupina {
 		this.naziv = naziv;
 	}
 	
-	public Set<Dovoljenje> getDovoljenja() {
-		return dovoljenja;
-	}
-	
-	public void setDovoljenja(Set<Dovoljenje> dovoljenja) {
-		this.dovoljenja = dovoljenja;
-	}
-	
 	public Set<Uporabnik> getClani() {
 		return clani;
 	}
 	
 	public void setClani(Set<Uporabnik> clani) {
 		this.clani = clani;
+	}
+	
+	public Set<Dovoljenje> getDovoljenja() {
+		return dovoljenja;
+	}
+	
+	public void setDovoljenja(Set<Dovoljenje> dovoljenja) {
+		this.dovoljenja = dovoljenja;
 	}
 }
