@@ -7,6 +7,7 @@ import com.mjamsek.lozigorbox.entities.requests.Direktorij;
 import com.mjamsek.lozigorbox.entities.responses.MenuItemResponse;
 import com.mjamsek.lozigorbox.repositories.MenuItemRepository;
 import com.mjamsek.lozigorbox.services.MenuItemService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -34,8 +35,8 @@ public class MenuItemServiceImpl implements MenuItemService {
 	}
 	
 	@Override
-	public MenuItemResponse pridobiZavarovanoPrvoStran() {
-		List<MenuItem> items = menuItemRepository.poisciVseIzMapeZPravico();
+	public MenuItemResponse pridobiZavarovanoPrvoStran(long parent, long uporabnik) {
+		List<MenuItem> items = menuItemRepository.poisciVseIzMapeZPravico(parent, uporabnik, 2);
 		
 		MenuItem korenski = pridobiKorenskiElement();
 		MenuItemResponse response = new MenuItemResponse(
@@ -55,7 +56,7 @@ public class MenuItemServiceImpl implements MenuItemService {
 	
 	@Override
 	public List<MenuItem> poisciZQueryjem(String query) {
-		return this.menuItemRepository.poisciZQueryjem(query);
+		return this.menuItemRepository.posciZQueryjem(query, 1, 2, new PageRequest(0, 20));
 	}
 	
 	@Override

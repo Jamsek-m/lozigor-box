@@ -83,10 +83,10 @@ public class ZetonServiceImpl implements ZetonService {
 	}
 	
 	@Override
-	public Uporabnik pridobiUporabnikaIzZetona(HttpServletRequest req) throws NiPravicException {
+	public Uporabnik pridobiUporabnikaIzZetona(HttpServletRequest req) {
 		String authorizationField = req.getHeader(HEADER_STRING);
 		if(authorizationField == null) {
-			throw new NiPravicException();
+			return null;
 		}
 		
 		String token = authorizationField.replace(TOKEN_PREFIX, "");

@@ -40,9 +40,9 @@ public class MenuVir {
 		return ResponseEntity.ok(this.menuItemService.poisciZQueryjem(query));
 	}
 	
-	@GetMapping("/test")
-	public ResponseEntity<MenuItemResponse> posredujPrvoStranMenujaSECURE() {
-		MenuItemResponse items = menuItemService.pridobiZavarovanoPrvoStran();
+	@GetMapping("/test/{id}")
+	public ResponseEntity<MenuItemResponse> posredujPrvoStranMenujaSECURE(@PathVariable("id") long parent, @RequestParam("u") long uporabnik) {
+		MenuItemResponse items = menuItemService.pridobiZavarovanoPrvoStran(parent, uporabnik);
 		return ResponseEntity.ok(items);
 	}
 	
