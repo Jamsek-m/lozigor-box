@@ -18,7 +18,7 @@ public interface MenuItemRepository extends JpaRepository<MenuItem, Long> {
 	
 	@Query(value = "select i from MenuItem i where i.parent = :parent " +
 			"and function('ima_pravice', :upb, i.id, :tip) = true")
-	public List<MenuItem> poisciVseIzMapeZPravico(
+	public List<MenuItem> poisciVseZParentom(
 			@Param("parent") long parent,
 			@Param("upb") long uporabnik,
 			@Param("tip") int tipDovoljenja

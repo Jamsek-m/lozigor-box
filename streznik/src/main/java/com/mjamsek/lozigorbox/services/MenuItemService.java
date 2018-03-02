@@ -4,6 +4,7 @@ import com.mjamsek.lozigorbox.entities.datoteka.Datoteka;
 import com.mjamsek.lozigorbox.entities.menu.MenuItem;
 import com.mjamsek.lozigorbox.entities.requests.Direktorij;
 import com.mjamsek.lozigorbox.entities.responses.MenuItemResponse;
+import com.mjamsek.lozigorbox.entities.uporabnik.Uporabnik;
 
 import java.util.List;
 
@@ -13,13 +14,11 @@ public interface MenuItemService {
 	
 	public MenuItem pridobiKorenskiElement();
 	
-	public MenuItemResponse pridobiPrvoStran();
+	public MenuItemResponse pridobiPrvoStran(Uporabnik uporabnik);
 	
-	public MenuItemResponse pridobiZavarovanoPrvoStran(long parent, long uporabnik);
+	public MenuItemResponse pridobiOtrokeElementa(long id, Uporabnik uporabnik);
 	
-	public MenuItemResponse pridobiOtrokeElementa(long id);
-	
-	public List<MenuItem> poisciZQueryjem(String query);
+	public List<MenuItem> poisciZQueryjem(String query, Uporabnik uporabnik);
 	
 	public void dodajDirektorij(Direktorij dir);
 	

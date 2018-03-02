@@ -43,11 +43,11 @@ where s.id in (
       on u.id = cs.upb_id
     inner join skupina s
       on s.id = cs.skupina_id
-  where cs.upb_id =2
+  where cs.upb_id =1
 )) upb
 CROSS JOIN (select i.dovoljenje_id, d.tip from item_dovoljenja i 
 inner join dovoljenje d on d.id = i.dovoljenje_id
-where i.item_id = 2) item
+where i.item_id = 5) item
 WHERE id = dovoljenje_id AND tip = 1;
 
 

@@ -15,6 +15,6 @@ public interface ZetonService {
 	
 	public Claims validirajZetonInVrniPodatke(String zeton);
 	
-	public Uporabnik pridobiUporabnikaIzZetona(HttpServletRequest req) throws NiPravicException;
+	public Uporabnik pridobiUporabnikaIzZetona(HttpServletRequest req);
 	
 }
