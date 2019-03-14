@@ -2,7 +2,7 @@
 
     <div class="container h-100 mt-5">
         <div id="search_bar" class="row h-100 justify-content-center align-items-center">
-            <!-- TODO: implement search bar -->
+            <!-- Search bar -->
             <form class="form-inline" (submit)="poisciDatoteke()" (reset)="prekliciIskanje()">
                 <div class="form-inline mr-2">
                     <input class="form-control" title="Išči" placeholder="Išči" type="text" name="query" [(ngModel)]="query"/>
@@ -14,12 +14,10 @@
                 <button type="reset" class="btn-outline-danger btn" *ngIf="query != ''">Prekliči</button>
             </form>
         </div>
-        <!-- TODO: dodaj vlogo -->
         <div class="m-2 mb-4" *ngIf="lahkoVidiUpload()">
             <button type="button" class="btn-upload btn btn-primary" (click)="openModalUploadFile(content)">Naloži</button>
         </div>
         <div id="files-wrapper" class="row h-100 justify-content-center align-items-center">
-
             <!-- GO ONE UP ELEMENT-->
             <div (click)="pojdiEnoGor()" *ngIf="parentMapa != 0" class="menu-element col-sm-12 p-2">
                 <fa name="folder" size="lg"></fa>
