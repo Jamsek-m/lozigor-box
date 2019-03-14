@@ -1,0 +1,25 @@
+kumuluzee:
+  name: lozigor-box
+  version: 1.0.0
+  env:
+    name: dev
+  server:
+    base-url: http://localhost:8080
+  health:
+    servlet:
+      mapping: /health
+      enabled: true
+    checks:
+      data-source-health-check:
+        jndi-name: jdbc/mainDB
+      disk-space-health-check:
+        threshold: 100000000
+  datasources:
+    - jndi-name: jdbc/mainDB
+      connection-url: jdbc:postgresql://localhost:5432/lozigor-box
+      username: postgres
+      password: postgres
+      pool:
+        max-size: 20
+lozigorbox-config:
+  data-storage-path: data-storage
