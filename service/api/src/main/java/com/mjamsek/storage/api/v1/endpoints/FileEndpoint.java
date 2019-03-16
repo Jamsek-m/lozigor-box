@@ -39,7 +39,7 @@ public class FileEndpoint {
     ) {
         
         File file = fileService.saveFile(fileInputStream, fileMetadata);
-        MenuEntry menuEntry = menuEntryService.createNewFileEntry(file, parentId);
+        MenuEntry menuEntry = menuEntryService.createNewFileEntry(file, fileMetadata.getFileName(), parentId);
         
         String baseUrl = ConfigurationUtil.getInstance().get("kumuluzee.server.base-url").get();
         URI entityUri = URI.create(baseUrl + "/v1/files/download/" + file.getId());

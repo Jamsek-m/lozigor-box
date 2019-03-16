@@ -5,13 +5,17 @@ import com.mjamsek.storage.entities.enums.MenuEntryType;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "file_entries")
+@Table(name = "menu_entries")
 @NamedQueries({
-    @NamedQuery(name = MenuEntryEntity.FIND_BY_PARENT, query = "SELECT f FROM MenuEntryEntity f WHERE f.parent = :parentId")
+    @NamedQuery(name = MenuEntryEntity.FIND_BY_PARENT, query = "SELECT f FROM MenuEntryEntity f WHERE f.parent = :parentId"),
+    @NamedQuery(name = MenuEntryEntity.FIND_ROOT, query = "SELECT f FROM MenuEntryEntity f WHERE f.name = '#ROOT' AND f.parent = 0")
 })
 public class MenuEntryEntity {
     
     public static final String FIND_BY_PARENT = "MenuEntry.findByParent";
+    public static final String FIND_ROOT = "MenuEntry.findRoot";
+    
+    public static final String ROOT_ELEMENT_NAME = "#ROOT";
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

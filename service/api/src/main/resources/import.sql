@@ -1,0 +1,1 @@
+INSERT INTO menu_entries(name, parent, type, file_id) VALUES ('#ROOT', 0, 'DIR', null);

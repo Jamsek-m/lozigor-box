@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
+import java.util.Date;
 
 public class FileUtil {
     
@@ -51,6 +53,13 @@ public class FileUtil {
     public static byte[] getFileByteArray(String storagePath, String filename) throws IOException {
         java.nio.file.Path fileLocation = Paths.get(storagePath).resolve(filename);
         return Files.readAllBytes(fileLocation);
+    }
+    
+    public static String getTimestampedFilename(String filename) {
+        String[] splittedFilename = filename.split("\\.");
+        String extension = splittedFilename[splittedFilename.length - 1];
+        String[] fileNameStrings = Arrays.copyOf(splittedFilename, splittedFilename.length - 1);
+        return String.format("%d-%s.%s", new Date().getTime(), StringUtil.joinStrings(fileNameStrings, "."), extension);
     }
     
 }

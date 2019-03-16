@@ -2,6 +2,7 @@ package com.mjamsek.storage.api.v1;
 
 import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import com.mjamsek.storage.api.v1.endpoints.FileEndpoint;
+import com.mjamsek.storage.api.v1.endpoints.MenuEntryEndpoint;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -15,6 +16,7 @@ public class LozigorBoxApplication extends ResourceConfig {
         register(MultiPartFeature.class);
         
         register(FileEndpoint.class);
+        register(MenuEntryEndpoint.class);
     }
     
 }

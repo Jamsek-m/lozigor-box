@@ -11,7 +11,9 @@ public class MenuEntryMapper {
         entry.setParent(entity.getParent());
         entry.setName(entity.getName());
         entry.setType(entity.getType());
-        entry.setFile(FileMapper.fromEntity(entity.getFile()));
+        if (entity.getFile() != null) {
+            entry.setFile(FileMapper.fromEntity(entity.getFile()));
+        }
         return entry;
     }
 }

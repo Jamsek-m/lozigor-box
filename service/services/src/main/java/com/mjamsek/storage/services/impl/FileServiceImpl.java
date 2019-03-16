@@ -36,24 +36,25 @@ public class FileServiceImpl implements FileService {
     public File saveFile(InputStream fileInputStream, FormDataContentDisposition fileMetadata) {
         FileEntity entity = new FileEntity();
         String filename = fileMetadata.getFileName();
+        String storeAsFileName = FileUtil.getTimestampedFilename(filename);
         String storagePath = configuration.getDataStoragePath();
         try {
             // 1. save to disk
-            FileUtil.saveFileToDisk(fileInputStream, storagePath, filename);
+            FileUtil.saveFileToDisk(fileInputStream, storagePath, storeAsFileName);
             
             // 2. save file metadata in db
-            entity.setFilename(filename);
+            entity.setFilename(storeAsFileName);
             entity.setUploadedAt(new Date());
             entity.setUpdatedAt(new Date());
-            entity.setSize(FileUtil.getFileSize(storagePath, filename));
-            entity.setExt(FileUtil.getFileExtension(filename));
+            entity.setSize(FileUtil.getFileSize(storagePath, storeAsFileName));
+            entity.setExt(FileUtil.getFileExtension(storeAsFileName));
             entity.setMimeType(FileUtil.getMimeType(fileInputStream));
             em.persist(entity);
             
             return FileMapper.fromEntity(entity);
             
         } catch (Exception ioExc) {
-            FileUtil.cleanupFileOnDisk(storagePath, filename);
+            FileUtil.cleanupFileOnDisk(storagePath, storeAsFileName);
             this.cleanupFileInDb(entity);
             return null;
         }
