@@ -2,10 +2,12 @@ package com.mjamsek.storage.services.impl;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
+import com.mjamsek.storage.entities.dto.ChangePasswordRequest;
 import com.mjamsek.storage.entities.dto.CreateUserRequest;
 import com.mjamsek.storage.entities.dto.CreateUserResponse;
 import com.mjamsek.storage.entities.dto.User;
 import com.mjamsek.storage.entities.exceptions.db.EntityNotFoundException;
+import com.mjamsek.storage.entities.exceptions.validation.ValidationException;
 import com.mjamsek.storage.entities.schema.RoleEntity;
 import com.mjamsek.storage.entities.schema.UserEntity;
 import com.mjamsek.storage.services.UserService;
@@ -104,8 +106,24 @@ public class UserServiceImpl implements UserService {
     
     @Transactional
     @Override
-    public User updateUser(CreateUserRequest request) {
-        throw new RuntimeException("Not yet implemented!");
+    public void updateUserPassword(ChangePasswordRequest request, long userId) {
+        
+        if (request.getOldPassword().isEmpty() || request.getPassword_1().isEmpty() || request.getPassword_2().isEmpty()) {
+            throw new ValidationException("All fields must be filled!");
+        }
+        if (!request.getPassword_1().equals(request.getPassword_2())) {
+            throw new ValidationException("Password confirmation is not the same as new password!");
+        }
+        UserEntity entity = em.find(UserEntity.class, userId);
+        if (entity == null) {
+            throw new EntityNotFoundException(userId, User.class);
+        }
+        if (!BCrypt.checkpw(request.getOldPassword(), entity.getPassword())) {
+            throw new ValidationException("Old password is incorrect!");
+        }
+        entity.setPassword(BCrypt.hashpw(request.getPassword_1(), BCrypt.gensalt()));
+        em.merge(entity);
+        em.flush();
     }
     
     private RoleEntity getUserRole() {

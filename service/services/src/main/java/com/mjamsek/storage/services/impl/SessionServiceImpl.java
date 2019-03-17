@@ -4,6 +4,7 @@ import com.mjamsek.storage.entities.schema.Session;
 import com.mjamsek.storage.entities.schema.UserEntity;
 import com.mjamsek.storage.services.SessionService;
 import com.mjamsek.storage.services.config.Environment;
+import com.mjamsek.storage.services.config.LozigorboxConfiguration;
 import com.mjamsek.storage.services.config.SecurityConstants;
 import com.mjamsek.storage.services.config.ServerConfiguration;
 import com.mjamsek.storage.services.utils.DateUtil;
@@ -27,6 +28,9 @@ public class SessionServiceImpl implements SessionService {
     
     @Inject
     private ServerConfiguration serverConfiguration;
+    
+    @Inject
+    private LozigorboxConfiguration configuration;
     
     @Override
     public Session findBySessionId(String sessionId) {
@@ -64,7 +68,7 @@ public class SessionServiceImpl implements SessionService {
         session.setIp(ip);
         session.setUser(user);
         session.setSessionId(StringUtil.generateRandomString(15));
-        session.setExpirationDate(DateUtil.getDateNSecondsFromNow(SecurityConstants.SESSION_DURATION_SECONDS));
+        session.setExpirationDate(DateUtil.getDateNSecondsFromNow(configuration.getSessionDuration()));
         em.persist(session);
         return session;
     }
@@ -86,12 +90,14 @@ public class SessionServiceImpl implements SessionService {
         
         this.deleteSession(session.getSessionId());
         em.flush();
-        return this.createSession(user, ip);
+        Session newSession = this.createSession(user, ip);
+        em.flush();
+        return newSession;
     }
     
     @Override
     public Cookie generateSessionCookie(Session session) {
-        return this.generateCookie(session.getSessionId(), SecurityConstants.SESSION_DURATION_SECONDS);
+        return this.generateCookie(session.getSessionId(), configuration.getSessionDuration());
     }
     
     @Override

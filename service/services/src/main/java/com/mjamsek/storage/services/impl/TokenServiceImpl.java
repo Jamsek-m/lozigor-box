@@ -7,10 +7,7 @@ import com.mjamsek.storage.services.config.LozigorboxConfiguration;
 import com.mjamsek.storage.services.config.SecurityConstants;
 import com.mjamsek.storage.services.mappers.RoleMapper;
 import com.mjamsek.storage.services.utils.DateUtil;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -39,9 +36,12 @@ public class TokenServiceImpl implements TokenService {
     public void validateToken(String jwt) throws InvalidTokenException {
         try {
             Jwts.parser().setSigningKey(configuration.getJwtSecretKey()).parseClaimsJws(jwt);
+        } catch (ExpiredJwtException exc) {
+            throw new InvalidTokenException("Token has expired!");
+        } catch (SignatureException exc) {
+            throw new InvalidTokenException("Invalid token signature!");
         } catch (JwtException ex) {
-            // TODO: add custom messages for all possible exceptions when parsing - avoid passing actual exception message
-            throw new InvalidTokenException(ex.getMessage());
+            throw new InvalidTokenException("Invalid token!");
         }
     }
     

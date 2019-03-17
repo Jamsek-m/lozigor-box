@@ -1,6 +1,7 @@
 package com.mjamsek.storage.services;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.mjamsek.storage.entities.dto.ChangePasswordRequest;
 import com.mjamsek.storage.entities.dto.CreateUserRequest;
 import com.mjamsek.storage.entities.dto.CreateUserResponse;
 import com.mjamsek.storage.entities.dto.User;
@@ -10,20 +11,20 @@ import java.util.List;
 
 public interface UserService {
     
-    public User getUserById(long userId);
+    User getUserById(long userId);
     
-    public User getUserByUsername(String username);
+    User getUserByUsername(String username);
     
-    public UserEntity getUserEntityByUsername(String username);
+    UserEntity getUserEntityByUsername(String username);
     
-    public List<User> getUsers(QueryParameters query);
+    List<User> getUsers(QueryParameters query);
     
-    public long getUsersCount(QueryParameters query);
+    long getUsersCount(QueryParameters query);
     
-    public CreateUserResponse createUser(CreateUserRequest request);
+    CreateUserResponse createUser(CreateUserRequest request);
     
-    public User setUserStatus(long userId, boolean active);
+    User setUserStatus(long userId, boolean active);
     
-    public User updateUser(CreateUserRequest request);
+    void updateUserPassword(ChangePasswordRequest request, long userId);
     
 }

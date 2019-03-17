@@ -1,1 +1,18 @@
+@import "./styles/variables";
+
 /* You can add global styles to this file, and also import other style files */
+* {
+    padding: 0;
+    margin: 0;
+    font-family: $font-open-sans;
+}
+h1, h2, h3, h4 {
+    font-family: $font-rubik;
+}
+
+h2 {
+    margin-bottom: 40px;
+}
+h3, h4 {
+    margin-bottom: 20px;
+}

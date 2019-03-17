@@ -5,8 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "sessions", indexes = {
-    @Index(name = "UNIQ_SESSION_ID", columnList = "session_id", unique = true),
-    @Index(name = "UNIQ_IP", columnList = "ip", unique = true)
+    @Index(name = "UNIQ_SESSION_ID", columnList = "session_id", unique = true)
 })
 @NamedQueries({
     @NamedQuery(name = Session.FIND_BY_SESSION_ID, query = "SELECT s FROM Session s WHERE s.sessionId = :sessionId"),
@@ -30,7 +29,7 @@ public class Session {
     @JoinColumn(name = "user_id")
     private UserEntity user;
     
-    @Column(unique = true)
+    @Column()
     private String ip;
     
     @Column(name = "expiration_date")

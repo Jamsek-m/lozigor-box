@@ -1,0 +1,26 @@
+<header>
+    <div class="header-content">
+        <nav>
+            <div class="brand-container">
+                <div class="mobile-toggler">
+                    <fa-icon [icon]="['fas', 'bars']" (click)="toggleMobileMenu()"></fa-icon>
+                </div>
+                <div class="brand">
+                    <a [routerLink]="['/']" (click)="closeMobileMenuOnNavigation()">
+                        <h1>LozigorBox</h1>
+                    </a>
+                </div>
+            </div>
+            <div class="menu" #navMenu>
+                <div class="menu-item">
+                    <a [routerLink]="['/admin']" *ngIf="hasAdminRights"
+                        (click)="closeMobileMenuOnNavigation()">Admin</a>
+                </div>
+                <div class="menu-item user-section">
+                    <a [routerLink]="['/user/profile']" *ngIf="isAuthenticated"
+                        (click)="closeMobileMenuOnNavigation()">User profile</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>

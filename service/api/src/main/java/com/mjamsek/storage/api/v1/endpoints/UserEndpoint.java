@@ -1,8 +1,11 @@
 package com.mjamsek.storage.api.v1.endpoints;
 
+import com.mjamsek.storage.api.v1.authorization.AuthenticatedUser;
 import com.mjamsek.storage.entities.context.UserContext;
+import com.mjamsek.storage.entities.dto.ChangePasswordRequest;
 import com.mjamsek.storage.entities.dto.CreateUserRequest;
 import com.mjamsek.storage.entities.dto.CreateUserResponse;
+import com.mjamsek.storage.entities.dto.User;
 import com.mjamsek.storage.services.UserService;
 
 import javax.enterprise.context.RequestScoped;
@@ -26,14 +29,13 @@ public class UserEndpoint {
     
     @GET
     @Path("/profile")
+    @AuthenticatedUser
     public Response getUserProfile() {
         if (userContext.hasContext()) {
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("id", userContext.getUserId());
-            map.put("username", userContext.getUsername());
-            map.put("roles", userContext.getUserRoles());
-            return Response.ok(map).build();
+            User user = userService.getUserById(userContext.getUserId());
+            return Response.ok(user).build();
         }
+        System.err.println("This should not happen - check auth interceptor");
         return Response.serverError().build();
     }
     
@@ -41,6 +43,14 @@ public class UserEndpoint {
     public Response createNewUser(CreateUserRequest request) {
         CreateUserResponse response = userService.createUser(request);
         return Response.status(Response.Status.CREATED).entity(response).build();
+    }
+    
+    @PATCH
+    @Path("/change-password")
+    @AuthenticatedUser
+    public Response changePassword(ChangePasswordRequest request) {
+        userService.updateUserPassword(request, userContext.getUserId());
+        return Response.ok().build();
     }
     
 }

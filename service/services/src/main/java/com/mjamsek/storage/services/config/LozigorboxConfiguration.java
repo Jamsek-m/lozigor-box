@@ -12,14 +12,17 @@ public class LozigorboxConfiguration {
     @ConfigValue("data-storage-path")
     private String dataStoragePath;
     
-    @ConfigValue("security.jwt-secret-key")
+    @ConfigValue("security.jwt.secret-key")
     private String jwtSecretKey;
     
-    @ConfigValue("security.jwt-issuer")
+    @ConfigValue("security.jwt.issuer")
     private String jwtIssuer;
     
-    @ConfigValue("security.jwt-token-validity")
+    @ConfigValue("security.jwt.token-validity")
     private int jwtTokenValidity;
+    
+    @ConfigValue("security.session.duration")
+    private int sessionDuration;
     
     public String getDataStoragePath() {
         return dataStoragePath;
@@ -51,5 +54,13 @@ public class LozigorboxConfiguration {
     
     public void setJwtTokenValidity(int jwtTokenValidity) {
         this.jwtTokenValidity = jwtTokenValidity;
+    }
+    
+    public int getSessionDuration() {
+        return sessionDuration;
+    }
+    
+    public void setSessionDuration(int sessionDuration) {
+        this.sessionDuration = sessionDuration;
     }
 }

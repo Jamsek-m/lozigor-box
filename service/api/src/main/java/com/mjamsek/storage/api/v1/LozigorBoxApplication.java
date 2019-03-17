@@ -7,13 +7,14 @@ import com.mjamsek.storage.api.v1.endpoints.MenuEntryEndpoint;
 import com.mjamsek.storage.api.v1.endpoints.UserEndpoint;
 import com.mjamsek.storage.api.v1.filters.SecurityHeadersFilter;
 import com.mjamsek.storage.api.v1.mappers.AuthorizationExceptionMapper;
+import com.mjamsek.storage.api.v1.mappers.ValidationExceptionMapper;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import javax.ws.rs.ApplicationPath;
 
 @ApplicationPath("/v1")
-@CrossOrigin
+@CrossOrigin(supportedMethods = "GET,POST,DELETE,PUT,OPTIONS,PATCH")
 public class LozigorBoxApplication extends ResourceConfig {
     
     public LozigorBoxApplication() {
@@ -25,6 +26,8 @@ public class LozigorBoxApplication extends ResourceConfig {
         register(UserEndpoint.class);
         
         register(AuthorizationExceptionMapper.class);
+        register(ValidationExceptionMapper.class);
+        
         register(SecurityHeadersFilter.class);
     }
     

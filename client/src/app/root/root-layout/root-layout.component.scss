@@ -1,0 +1,33 @@
+@import "../../../styles/media-mixin";
+@import "../../../styles/variables";
+
+.page-content {
+    display: flex;
+    justify-content: center;
+}
+
+
+@include device-specific($phone) {
+    .page-content {
+        main {
+            padding-top: 20px;
+            width: 90%;
+        }
+    }
+}
+@include device-specific($tablet) {
+    .page-content {
+        main {
+            padding-top: 40px;
+            width: 90%;
+        }
+    }
+}
+@include device-specific($pc) {
+    .page-content {
+        main {
+            padding-top: 60px;
+            width: 60%;
+        }
+    }
+}

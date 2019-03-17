@@ -25,6 +25,9 @@ kumuluzee:
 lozigorbox-config:
   data-storage-path: data-storage
   security:
-    jwt-issuer: store.mjamsek.com
-    jwt-secret-key: verySecureKeyThatIsReplacedInProduction
-    jwt-token-validity: 600
+    jwt:
+      issuer: store.mjamsek.com
+      secret-key: verySecureKeyThatIsReplacedInProduction
+      token-validity: 600
+    session:
+      duration: 3600

@@ -144,7 +144,7 @@ public class AuthServiceImpl implements AuthService {
         ApplicationGrant grant = new ApplicationGrant();
         grant.setAccessToken(jwt);
         grant.setExpiresIn(configuration.getJwtTokenValidity());
-        grant.setSessionExpiresIn(SecurityConstants.SESSION_DURATION_SECONDS);
+        grant.setSessionExpiresIn(configuration.getSessionDuration());
         return grant;
     }
     
