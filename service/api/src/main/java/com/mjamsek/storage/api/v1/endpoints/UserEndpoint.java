@@ -1,10 +1,8 @@
 package com.mjamsek.storage.api.v1.endpoints;
 
-import com.mjamsek.storage.api.v1.authorization.AuthenticatedUser;
 import com.mjamsek.storage.entities.context.UserContext;
 import com.mjamsek.storage.entities.dto.CreateUserRequest;
 import com.mjamsek.storage.entities.dto.CreateUserResponse;
-import com.mjamsek.storage.entities.dto.User;
 import com.mjamsek.storage.services.UserService;
 
 import javax.enterprise.context.RequestScoped;
@@ -28,7 +26,6 @@ public class UserEndpoint {
     
     @GET
     @Path("/profile")
-    @AuthenticatedUser
     public Response getUserProfile() {
         if (userContext.hasContext()) {
             HashMap<String, Object> map = new HashMap<>();

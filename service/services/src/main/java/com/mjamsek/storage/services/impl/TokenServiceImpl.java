@@ -40,6 +40,7 @@ public class TokenServiceImpl implements TokenService {
         try {
             Jwts.parser().setSigningKey(configuration.getJwtSecretKey()).parseClaimsJws(jwt);
         } catch (JwtException ex) {
+            // TODO: add custom messages for all possible exceptions when parsing - avoid passing actual exception message
             throw new InvalidTokenException(ex.getMessage());
         }
     }

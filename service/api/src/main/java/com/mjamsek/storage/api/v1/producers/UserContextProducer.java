@@ -11,6 +11,8 @@ import io.jsonwebtoken.Claims;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RequestScoped
@@ -29,12 +31,15 @@ public class UserContextProducer {
             String jwt = authService.getJwtFromHeader();
             Claims claims = tokenService.getTokenClaims(jwt);
             
+            Set<Role> roles = new HashSet<>((List<Role>) claims.get(SecurityConstants.JWT_CLAIM_ROLES));
+            
             return UserContextBuilder.getBuilder()
                 .withUserId(Long.parseLong(claims.getSubject()))
                 .withUsername((String) claims.get(SecurityConstants.JWT_CLAIM_USERNAME))
-                .withRoles((Set<Role>) claims.get(SecurityConstants.JWT_CLAIM_ROLES))
+                .withRoles(roles)
                 .build();
         } catch (Exception exc) {
+            exc.printStackTrace();
             return UserContextBuilder.empty();
         }
     }
