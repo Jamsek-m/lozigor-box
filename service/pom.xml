@@ -22,6 +22,9 @@
         <jersey-multipart.version>2.28</jersey-multipart.version>
         <postgres.version>42.2.5</postgres.version>
         <tika.version>1.20</tika.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <jbcrypt.version>0.4</jbcrypt.version>
+        <jackson.version>2.9.8</jackson.version>
     </properties>
 
     <modules>
@@ -89,6 +92,21 @@
                 <groupId>org.apache.tika</groupId>
                 <artifactId>tika-core</artifactId>
                 <version>${tika.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mindrot</groupId>
+                <artifactId>jbcrypt</artifactId>
+                <version>${jbcrypt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

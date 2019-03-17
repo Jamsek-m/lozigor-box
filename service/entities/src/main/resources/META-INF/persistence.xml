@@ -6,6 +6,8 @@
 
         <class>com.mjamsek.storage.entities.schema.MenuEntryEntity</class>
         <class>com.mjamsek.storage.entities.schema.FileEntity</class>
+        <class>com.mjamsek.storage.entities.schema.RoleEntity</class>
+        <class>com.mjamsek.storage.entities.schema.UserEntity</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>

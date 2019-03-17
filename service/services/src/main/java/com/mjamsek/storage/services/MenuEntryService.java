@@ -21,4 +21,8 @@ public interface MenuEntryService {
     MenuEntry getRootElement();
     
     MenuEntry createDirectory(Directory dir);
+    
+    List<MenuEntry> queryFiles(String query);
+    
+    long queryFilesCount(String query);
 }

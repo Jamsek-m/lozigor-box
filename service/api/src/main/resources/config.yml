@@ -4,6 +4,7 @@ kumuluzee:
   env:
     name: dev
   server:
+    show-server-info: false
     base-url: http://localhost:8080
   health:
     servlet:
@@ -23,3 +24,7 @@ kumuluzee:
         max-size: 20
 lozigorbox-config:
   data-storage-path: data-storage
+  security:
+    jwt-issuer: store.mjamsek.com
+    jwt-secret-key: verySecureKeyThatIsReplacedInProduction
+    jwt-token-validity: 600

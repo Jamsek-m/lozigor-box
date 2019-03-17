@@ -8,8 +8,10 @@ import com.mjamsek.storage.services.MenuEntryService;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
 @RequestScoped
@@ -21,11 +23,22 @@ public class MenuEntryEndpoint {
     @Inject
     private MenuEntryService menuEntryService;
     
+    @Context
+    protected UriInfo uriInfo;
+    
     @GET
     @Path("/{parentId}")
     public Response getMenuLevel(@PathParam("parentId") long parentId) {
         List<MenuEntry> menuEntries = menuEntryService.getChildrenOf(parentId);
         return Response.ok(menuEntries).header(CustomHttpHeader.X_TOTAL_COUNT, menuEntries.size()).build();
+    }
+    
+    @GET
+    @Path("/query")
+    public Response queryFiles(@QueryParam("q") @DefaultValue("") String searchQuery) {
+        List<MenuEntry> entries = menuEntryService.queryFiles(searchQuery);
+        long queryCount = menuEntryService.queryFilesCount(searchQuery);
+        return Response.ok().header(CustomHttpHeader.X_TOTAL_COUNT, queryCount).entity(entries).build();
     }
     
     @POST

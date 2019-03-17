@@ -15,7 +15,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -56,7 +55,7 @@ public class MenuEntryServiceImpl implements MenuEntryService {
     
     @Override
     public List<MenuEntry> getChildrenOf(long parentId) {
-        Query query = em.createNamedQuery(MenuEntryEntity.FIND_BY_PARENT, MenuEntryEntity.class);
+        TypedQuery<MenuEntryEntity> query = em.createNamedQuery(MenuEntryEntity.FIND_BY_PARENT, MenuEntryEntity.class);
         query.setParameter("parentId", parentId);
         List<MenuEntryEntity> entities = query.getResultList();
         return entities.stream().map(MenuEntryMapper::fromEntity).collect(Collectors.toList());
@@ -108,5 +107,22 @@ public class MenuEntryServiceImpl implements MenuEntryService {
         entity.setFile(null);
         em.persist(entity);
         return MenuEntryMapper.fromEntity(entity);
+    }
+    
+    @Override
+    public List<MenuEntry> queryFiles(String query) {
+        TypedQuery<MenuEntryEntity> jpaQuery = em.createNamedQuery(MenuEntryEntity.QUERY_FILES, MenuEntryEntity.class);
+        jpaQuery.setParameter("query", query);
+        return jpaQuery.getResultList()
+            .stream()
+            .map(MenuEntryMapper::fromEntity)
+            .collect(Collectors.toList());
+    }
+    
+    @Override
+    public long queryFilesCount(String query) {
+        TypedQuery<Long> jpaQuery = em.createNamedQuery(MenuEntryEntity.QUERY_FILES_COUNT, Long.class);
+        jpaQuery.setParameter("query", query);
+        return jpaQuery.getSingleResult();
     }
 }
