@@ -1,0 +1,36 @@
+@import "../../../styles/variables";
+
+.notification {
+    padding: 10px 20px;
+    @include centered($justify: space-between);
+    border-radius: 5px;
+
+    &.hidden {
+        display: none !important;
+    }
+    &.error {
+        color: $notif-error;
+        background-color: $notif-error-bg;
+    }
+    &.success {
+        color: $notif-success;
+        background-color: $notif-success-bg;
+    }
+    &.info {
+        color: $notif-info;
+        background-color: $notif-info-bg;
+    }
+    &.warning {
+        color: $notif-warning;
+        background-color: $notif-warning-bg;
+    }
+
+    .content {
+
+    }
+    .close-btn {
+        font-size: 24px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+}

@@ -45,6 +45,16 @@ header {
                     }
                     &.user-section {
                         margin-left: auto;
+                        font-size: 22px;
+
+                        .phone-title {
+                            display: none;
+                        }
+                        .logout-btn {
+                            margin-left: 20px;
+                            color: $white;
+                            cursor: pointer;
+                        }
                     }
                     &:last-child {
                         margin-right: 0;
@@ -97,6 +107,20 @@ header {
                         margin-right: 0;
                         padding-top: 20px;
 
+                        &.user-section {
+                            flex-direction: column;
+
+                            .phone-title {
+                                display: inline;
+                                font-size: 16px;
+                                margin-left: 10px;
+                                font-weight: 600;
+                            }
+                            .logout-btn {
+                                margin-top: 10px;
+                                margin-left: 0;
+                            }
+                        }
                         &:last-child {
                             margin-bottom: 20px;
                         }

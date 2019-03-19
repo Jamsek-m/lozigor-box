@@ -1,0 +1,41 @@
+@import "../../../../styles/variables";
+@import "../../../../styles/media-mixin";
+
+.login-page {
+    @include centered;
+    padding-top: 50px;
+
+    .login-form {
+
+        .center {
+            @include centered;
+
+            button {
+                padding: 5px 60px;
+            }
+        }
+    }
+}
+@include device-specific($phone) {
+    .login-page {
+        .login-form {
+            width: 90%;
+        }
+    }
+}
+
+@include device-specific($tablet) {
+    .login-page {
+        .login-form {
+            width: 90%;
+        }
+    }
+}
+
+@include device-specific($pc) {
+    .login-page {
+        .login-form {
+            width: 40%;
+        }
+    }
+}

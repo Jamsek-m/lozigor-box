@@ -1,0 +1,4 @@
+<div class="notification {{type}}" [ngClass]="{'hidden': !visible}">
+    <span class="content">{{message}}</span>
+    <span class="close-btn" (click)="hide()">&times;</span>
+</div>

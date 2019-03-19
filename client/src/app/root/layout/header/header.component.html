@@ -18,7 +18,14 @@
                 </div>
                 <div class="menu-item user-section">
                     <a [routerLink]="['/user/profile']" *ngIf="isAuthenticated"
-                        (click)="closeMobileMenuOnNavigation()">User profile</a>
+                        (click)="closeMobileMenuOnNavigation()">
+                        <fa-icon icon="user" title="User profile"></fa-icon>
+                        <span class="phone-title">User profile</span>
+                    </a>
+                    <span class="logout-btn" (click)="logout()" *ngIf="isAuthenticated">
+                        <fa-icon icon="sign-out-alt" title="Sign out"></fa-icon>
+                        <span class="phone-title">Sign out</span>
+                    </span>
                 </div>
             </div>
         </nav>

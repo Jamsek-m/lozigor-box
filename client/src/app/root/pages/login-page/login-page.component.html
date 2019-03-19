@@ -1,5 +1,18 @@
-<form (submit)="login()">
-    <input name="us" [(ngModel)]="credentials.username"/> <br/>
-    <input name="pas" [(ngModel)]="credentials.password"/> <br/>
-    <button type="submit">Login</button>
-</form>
+<div class="login-page">
+    <div class="login-form">
+        <form (submit)="login()">
+            <div class="form-group">
+                <label for="us">Username</label>
+                <input id="us" type="text" class="form-control" name="us" [(ngModel)]="credentials.username"/>
+            </div>
+            <div class="form-group">
+                <label for="pas">Password</label>
+                <input id="pas" type="password" class="form-control" name="pas" [(ngModel)]="credentials.password"/>
+            </div>
+            <mj-notification *ngIf="error" type="error" [message]="error"></mj-notification>
+            <div class="form-actions center">
+                <button type="submit">Login</button>
+            </div>
+        </form>
+    </div>
+</div>

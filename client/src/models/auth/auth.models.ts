@@ -53,4 +53,14 @@ export class AuthData {
         data.payload = AuthTokenPayload.fromToken(resp.accessToken);
         return data;
     }
+
+    public static unauthenticated(): AuthData {
+        const data = new AuthData();
+        data.authenticated = false;
+        data.accessToken = "resp.accessToken";
+        data.tokenValidity = -1;
+        data.sessionValidity = -1;
+        data.payload = null;
+        return data;
+    }
 }

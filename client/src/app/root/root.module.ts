@@ -12,15 +12,22 @@ import {ContentTypeInterceptor} from "../services/content-type.interceptor";
 import {AuthInterceptor} from "../services/auth/auth.interceptor";
 import {HeaderComponent} from "./layout/header/header.component";
 import {IconsModule} from "./icons.module";
+import {SharedModule} from "../shared/shared.module";
 
 @NgModule({
-    declarations: [RootLayoutComponent, Error404PageComponent, LoginPageComponent, HeaderComponent],
+    declarations: [
+        RootLayoutComponent,
+        Error404PageComponent,
+        LoginPageComponent,
+        HeaderComponent
+    ],
     imports: [
         CommonModule,
         RootRoutingModule,
         HttpClientModule,
         FormsModule,
-        IconsModule
+        IconsModule,
+        SharedModule
     ],
     exports: [
         RouterModule

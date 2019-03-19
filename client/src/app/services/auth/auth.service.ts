@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {EventEmitter, Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {AuthData, AuthRole, AuthTokenPayload, AuthTokenRefreshResponse, LoginCredentials} from "../../../models/auth/auth.models";
 import {environment} from "../../../environments/environment";
@@ -15,6 +15,8 @@ export class AuthService {
     private static auth: AuthData;
 
     private v1Api = `${environment.apiV1Url}/auth`;
+
+    private authChangeEmitter: EventEmitter<boolean> = new EventEmitter();
 
     constructor(private http: HttpClient) {
 
@@ -126,6 +128,14 @@ export class AuthService {
         );
     }
 
+    public notifyAuthChange(isAuthenticated: boolean): void {
+        this.authChangeEmitter.emit(isAuthenticated);
+    }
+
+    public authChangeSubscription(): EventEmitter<boolean> {
+        return this.authChangeEmitter;
+    }
+
     /**
      * Destroys session and deletes token
      */
@@ -133,7 +143,8 @@ export class AuthService {
         const url = `${this.v1Api}/logout`;
         return this.http.get(url, {withCredentials: true}).pipe(
             tap(() => {
-                AuthService.auth = null;
+                AuthService.auth = AuthData.unauthenticated();
+                this.notifyAuthChange(false);
             }),
             catchError((err: HttpErrorResponse) => {
                 console.error(err);

@@ -12,6 +12,8 @@ export class LoginPageComponent implements OnInit {
 
     public credentials = new LoginCredentials();
 
+    public error = "";
+
     constructor(private auth: AuthService, private router: Router) {
     }
 
@@ -22,16 +24,18 @@ export class LoginPageComponent implements OnInit {
     }
 
     public login() {
+        this.error = "";
         if (!this.credentials.password || !this.credentials.username) {
-            alert("Empty credentials!");
+            this.error = "Fields must not be empty!";
             return;
         }
         this.auth.login(this.credentials).subscribe(
             (sessionStarted: boolean) => {
                 if (sessionStarted) {
+                    this.auth.notifyAuthChange(true);
                     this.router.navigate(["/"]);
                 } else {
-                    alert("Wrong credentials!");
+                    this.error = "Wrong username and/or password!";
                 }
             }
         );
