@@ -1,0 +1,19 @@
+@import "../../../../../styles/variables";
+
+.download-page {
+    @include centered();
+
+    .content {
+        margin-top: 50px;
+        width: 40%;
+
+        p {
+            text-align: center;
+            margin-bottom: 40px;
+
+            a {
+                text-decoration: none;
+            }
+        }
+    }
+}

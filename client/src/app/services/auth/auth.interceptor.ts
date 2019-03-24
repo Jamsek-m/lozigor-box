@@ -4,6 +4,7 @@ import {from, Observable} from "rxjs";
 import {AuthService} from "./auth.service";
 import {switchMap} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
+import {PUBLIC_URLS} from "../../config/public-urls";
 
 
 @Injectable({
@@ -17,7 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        if (this.isUrlOnBlacklist(req.url)) {
+        if (this.isUrlOnBlacklist(req.url) || this.isPublicUrl(req.url)) {
             return next.handle(req);
         }
 
@@ -48,6 +49,14 @@ export class AuthInterceptor implements HttpInterceptor {
             return true;
         }
         return false;
+    }
+
+    private isPublicUrl(url: string) {
+        url = url.replace(environment.apiV1Url, "");
+        const foundUrl = PUBLIC_URLS.find((publicUrl: RegExp) => {
+            return publicUrl.test(url);
+        });
+        return !!foundUrl;
     }
 
 }

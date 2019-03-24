@@ -7,6 +7,8 @@ import com.mjamsek.storage.api.v1.endpoints.MenuEntryEndpoint;
 import com.mjamsek.storage.api.v1.endpoints.UserEndpoint;
 import com.mjamsek.storage.api.v1.filters.SecurityHeadersFilter;
 import com.mjamsek.storage.api.v1.mappers.AuthorizationExceptionMapper;
+import com.mjamsek.storage.api.v1.mappers.EntityExceptionMapper;
+import com.mjamsek.storage.api.v1.mappers.FileExceptionMapper;
 import com.mjamsek.storage.api.v1.mappers.ValidationExceptionMapper;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -27,6 +29,8 @@ public class LozigorBoxApplication extends ResourceConfig {
         
         register(AuthorizationExceptionMapper.class);
         register(ValidationExceptionMapper.class);
+        register(FileExceptionMapper.class);
+        register(EntityExceptionMapper.class);
         
         register(SecurityHeadersFilter.class);
     }

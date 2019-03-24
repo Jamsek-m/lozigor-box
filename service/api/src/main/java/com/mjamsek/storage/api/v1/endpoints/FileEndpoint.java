@@ -49,7 +49,7 @@ public class FileEndpoint {
     
     @GET
     @Path("/download/{fileId}")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Produces({MediaType.APPLICATION_OCTET_STREAM, MediaType.APPLICATION_JSON})
     public Response downloadFile(@PathParam("fileId") long fileId) {
         File file = fileService.getFile(fileId);
         byte[] fileByteArray = fileService.getFileByteArray(file.getFilename());
@@ -57,6 +57,13 @@ public class FileEndpoint {
             .header(HttpHeaders.CONTENT_TYPE, file.getMimeType())
             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getFilename())
             .build();
+    }
+    
+    @GET
+    @Path("/{fileId}")
+    public Response getFileMeta(@PathParam("fileId") long fileId) {
+        File file = fileService.getFile(fileId);
+        return Response.ok(file).build();
     }
     
     @POST
