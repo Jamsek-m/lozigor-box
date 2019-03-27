@@ -1,5 +1,5 @@
-import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
+import {LOCALE_ID, NgModule} from "@angular/core";
+import {CommonModule, registerLocaleData} from "@angular/common";
 
 import {RootRoutingModule} from "./root-routing.module";
 import {RouterModule} from "@angular/router";
@@ -13,6 +13,9 @@ import {AuthInterceptor} from "../services/auth/auth.interceptor";
 import {HeaderComponent} from "./layout/header/header.component";
 import {IconsModule} from "./icons.module";
 import {SharedModule} from "../shared/shared.module";
+import localeSl from "@angular/common/locales/sl";
+
+registerLocaleData(localeSl, "sl");
 
 @NgModule({
     declarations: [
@@ -33,6 +36,10 @@ import {SharedModule} from "../shared/shared.module";
         RouterModule
     ],
     providers: [
+        {
+            provide: LOCALE_ID,
+            useValue: "sl-SL"
+        },
         {
             provide: HTTP_INTERCEPTORS,
             multi: true,

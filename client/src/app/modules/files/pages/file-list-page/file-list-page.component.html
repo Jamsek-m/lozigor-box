@@ -1,3 +1,34 @@
-<p>
-  file-list-page works!
-</p>
+<div class="files">
+    <div class="files-header">
+        <span class="icon"></span>
+        <span class="name">Name</span>
+        <span class="type">Type</span>
+        <span class="size">Size</span>
+        <span class="update">Last update</span>
+    </div>
+    <div class="files-content">
+        <div *ngIf="currentDirectory !== null && currentDirectory.id !== 1" class="file-entry" (dblclick)="goOneLevelUp()">
+            <span class="icon"><fa-icon [icon]="['fas', 'folder']"></fa-icon></span>
+            <span class="name">..</span>
+            <span class="type"></span>
+            <span class="size"></span>
+            <span class="update"></span>
+        </div>
+        <div class="file-entry" *ngFor="let entry of menuEntries" (click)="selectActiveEntry(entry)"
+            (dblclick)="setCurrentDirectory(entry)"
+            [ngClass]="{'active': activeEntry === entry}">
+            <span class="icon" [ngSwitch]="entry.type">
+                <fa-icon *ngSwitchCase="'DIR'" [icon]="['fas', 'folder']"></fa-icon>
+                <fa-icon *ngSwitchDefault [icon]="['fas', 'file']"></fa-icon>
+            </span>
+            <span class="name">{{entry.name}}</span>
+            <span class="type" *ngIf="entry.file !== null">
+                {{entry.file.ext}}
+            </span>
+            <span class="size" *ngIf="entry.file !== null">
+                {{(entry.file.size | fileSize)}}
+            </span>
+            <span class="update" *ngIf="entry.file !== null">{{entry.file.updatedAt | date: 'dd.MM.yyyy HH:mm:ss'}}</span>
+        </div>
+    </div>
+</div>

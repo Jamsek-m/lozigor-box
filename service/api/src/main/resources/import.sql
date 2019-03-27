@@ -16,7 +16,7 @@ INSERT INTO menu_entries(name, parent, type, file_id) VALUES ('Mapa 3.1', 5, 'DI
 INSERT INTO menu_entries(name, parent, type, file_id) VALUES ('Mapa 3.2', 5, 'DIR', null);
 INSERT INTO menu_entries(name, parent, type, file_id) VALUES ('Mapa 3.2.1', 6, 'DIR', null);
 
-INSERT INTO files(ext, filename, mime_type, size, updated_at, uploaded_at) VALUES ('.png', 'slika.png', 'application/octet-stream', 4000, NOW(), NOW());
+INSERT INTO files(ext, filename, mime_type, size, updated_at, uploaded_at) VALUES ('.png', 'slika.png', 'application/octet-stream', 40000000, NOW(), NOW());
 INSERT INTO files(ext, filename, mime_type, size, updated_at, uploaded_at) VALUES ('.png', 'slika.png', 'application/octet-stream', 4000, NOW(), NOW());
 INSERT INTO files(ext, filename, mime_type, size, updated_at, uploaded_at) VALUES ('.png', 'slika.png', 'application/octet-stream', 4000, NOW(), NOW());
 INSERT INTO files(ext, filename, mime_type, size, updated_at, uploaded_at) VALUES ('.png', 'slika.png', 'application/octet-stream', 4000, NOW(), NOW());

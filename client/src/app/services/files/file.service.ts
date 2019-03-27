@@ -17,6 +17,19 @@ export class FileService {
 
     }
 
+    public downloadFileWithGivenMeta(file: File): Observable<FileDownloadResponse> {
+        const downloadUrl = `${this.v1Url}/download/${file.id}`;
+        return this.http.get(downloadUrl, {responseType: "blob"}).pipe(
+            tap((blob: any) => {
+                this.triggerSaveDialog(blob, file);
+            }),
+            map(() => {
+                return FileDownloadResponse.OK;
+            }),
+            catchError(this.handleDownloadError)
+        );
+    }
+
     public downloadFile(fileId: number): Observable<FileDownloadResponse> {
         const downloadUrl = `${this.v1Url}/download/${fileId}`;
         const metaUrl = `${this.v1Url}/${fileId}`;

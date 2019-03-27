@@ -1,2 +1,11 @@
-<div style="color: blue;">Files layout</div>
+<div class="files-toolbar">
+    <mj-toolbar-button [title]="'Upload'" [icon]="['fas', 'cloud-upload-alt']"
+        (whenClicked)="upload()"></mj-toolbar-button>
+    <mj-toolbar-button *ngIf="activeMenuEntry !== null" [title]="'Delete'" (whenClicked)="delete()"
+        [icon]="['fas', 'trash']"></mj-toolbar-button>
+    <mj-toolbar-button *ngIf="activeMenuEntry !== null" [title]="'Move'" (whenClicked)="move()"
+        [icon]="['fas', 'exchange-alt']"></mj-toolbar-button>
+    <mj-toolbar-button *ngIf="activeMenuEntry !== null" [title]="'Rename'" (whenClicked)="rename()"
+        [icon]="['fas', 'pencil-alt']"></mj-toolbar-button>
+</div>
 <router-outlet></router-outlet>

@@ -1,0 +1,54 @@
+@import "../../../../../styles/variables";
+@import "../../../../../styles/media-mixin";
+
+.files {
+    .files-header {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid lightgrey;
+        margin-bottom: 20px;
+    }
+    .files-content {
+        .file-entry {
+            padding-top: 8px;
+            padding-bottom: 8px;
+            cursor: pointer;
+
+            &:hover {
+                border-radius: 2px;
+                background-color: $blue-hover;
+            }
+            &.active {
+                background-color: $blue-200;
+            }
+        }
+    }
+    .file-entry, .files-header {
+        display: flex;
+        justify-content: flex-start;
+        padding-left: 10px;
+        padding-right: 10px;
+
+        .icon {
+            display: inline-block;
+            width: 30px;
+            user-select: none;
+        }
+        .name {
+            flex-grow: 1;
+            user-select: none;
+        }
+        .type {
+            width: 50px;
+            user-select: none;
+        }
+        .size {
+            width: 150px;
+            user-select: none;
+        }
+        .update {
+            width: 150px;
+            user-select: none;
+        }
+    }
+}

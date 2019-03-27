@@ -34,6 +34,13 @@ public class MenuEntryEndpoint {
     }
     
     @GET
+    @Path("/dir/{id}")
+    public Response getDirectoryData(@PathParam("id") long dirId) {
+        MenuEntry entry = menuEntryService.getFileEntry(dirId);
+        return Response.ok(entry).build();
+    }
+    
+    @GET
     @Path("/query")
     public Response queryFiles(@QueryParam("q") @DefaultValue("") String searchQuery) {
         List<MenuEntry> entries = menuEntryService.queryFiles(searchQuery);
