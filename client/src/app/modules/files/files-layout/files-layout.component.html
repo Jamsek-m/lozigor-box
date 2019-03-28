@@ -7,5 +7,7 @@
         [icon]="['fas', 'exchange-alt']"></mj-toolbar-button>
     <mj-toolbar-button *ngIf="activeMenuEntry !== null" [title]="'Rename'" (whenClicked)="rename()"
         [icon]="['fas', 'pencil-alt']"></mj-toolbar-button>
+    <mj-toolbar-button [title]="'New Folder'" (whenClicked)="move()"
+        [icon]="['fas', 'folder-plus']"></mj-toolbar-button>
 </div>
 <router-outlet></router-outlet>
