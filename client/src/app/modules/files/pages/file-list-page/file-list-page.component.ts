@@ -22,6 +22,10 @@ export class FileListPageComponent implements OnInit {
 
     ngOnInit() {
         this.getDirectoryContent();
+
+        this.menuService.reloadCurrentDirectoryListener().subscribe(() => {
+            this.getDirectoryContent();
+        });
     }
 
     private getDirectoryContent(): void {

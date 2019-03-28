@@ -9,6 +9,7 @@ import {FileSizePipe} from "../../pipes/file-size.pipe";
 import {IconsModule} from "../../root/icons.module";
 import {ToolbarButtonComponent} from "./components/toolbar-button/toolbar-button.component";
 import {SharedModule} from "../../shared/shared.module";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
     declarations: [FilesLayoutComponent, FileListPageComponent, FileDownloadPageComponent, FileSizePipe, ToolbarButtonComponent],
@@ -16,7 +17,8 @@ import {SharedModule} from "../../shared/shared.module";
         CommonModule,
         FilesRoutingModule,
         IconsModule,
-        SharedModule
+        SharedModule,
+        FormsModule
     ]
 })
 export class FilesModule {

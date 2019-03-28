@@ -5,3 +5,9 @@
     display: flex;
     justify-content: flex-start;
 }
+.inline-form {
+    margin-right: 20px;
+    .form-input-append {
+        cursor: pointer;
+    }
+}

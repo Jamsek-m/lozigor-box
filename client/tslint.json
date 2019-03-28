@@ -73,6 +73,7 @@
             4
         ],
         "no-trailing-whitespace": false,
-        "no-string-literal": false
+        "no-string-literal": false,
+        "object-literal-shorthand": false
     }
 }

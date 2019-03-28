@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "menu_entries")
 @NamedQueries({
-    @NamedQuery(name = MenuEntryEntity.FIND_BY_PARENT, query = "SELECT f FROM MenuEntryEntity f WHERE f.parent = :parentId"),
+    @NamedQuery(name = MenuEntryEntity.FIND_BY_PARENT, query = "SELECT f FROM MenuEntryEntity f WHERE f.parent = :parentId ORDER BY f.name ASC"),
     @NamedQuery(name = MenuEntryEntity.FIND_ROOT, query = "SELECT f FROM MenuEntryEntity f WHERE f.name = '#ROOT' AND f.parent = 0"),
     @NamedQuery(name = MenuEntryEntity.QUERY_FILES, query = "SELECT f FROM MenuEntryEntity f WHERE f.type = 'FILE' AND f.name LIKE CONCAT('%', :query, '%')"),
     @NamedQuery(name = MenuEntryEntity.QUERY_FILES_COUNT, query = "SELECT COUNT(f) FROM MenuEntryEntity f WHERE f.type = 'FILE' AND f.name LIKE CONCAT('%', :query, '%')")

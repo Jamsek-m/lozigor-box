@@ -14,6 +14,7 @@ export class MenuService {
 
     private activeElementEvent: EventEmitter<MenuEntry> = new EventEmitter();
     private currentDirectoryEvent: EventEmitter<MenuEntry> = new EventEmitter();
+    private reloadCurrentDirectoryEvent: EventEmitter<void> = new EventEmitter();
 
     constructor(private http: HttpClient) {
 
@@ -35,6 +36,19 @@ export class MenuService {
         return this.http.get(url).pipe(map(res => res as MenuEntry));
     }
 
+    public createDirectory(directoryName: string, parentId: number): Observable<MenuEntry> {
+        const url = this.v1Api;
+        const data = JSON.stringify({
+            directoryName: directoryName,
+            parentId: parentId
+        });
+        return this.http.post(url, data).pipe(map(res => res as MenuEntry));
+    }
+
+    /*
+     * Event listener for layout and list communication
+     */
+
     public setActiveMenuEntry(menuEntry: MenuEntry): void {
         this.activeElementEvent.emit(menuEntry);
     }
@@ -49,6 +63,14 @@ export class MenuService {
 
     public currentDirectoryListener(): EventEmitter<MenuEntry> {
         return this.currentDirectoryEvent;
+    }
+
+    public reloadCurrentDirectory(): void {
+        this.reloadCurrentDirectoryEvent.emit();
+    }
+
+    public reloadCurrentDirectoryListener(): EventEmitter<void> {
+        return this.reloadCurrentDirectoryEvent;
     }
 
 }

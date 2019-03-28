@@ -13,12 +13,24 @@ export class FilesLayoutComponent implements OnInit {
     private activeMenuEntry: MenuEntry = null;
     private currentDirectory: MenuEntry = null;
 
+    public newDir = {
+        show: false,
+        value: ""
+    };
+
     constructor(private menuService: MenuService, private modalService: ModalService) {
     }
 
     ngOnInit() {
         this.readCurrentDirectory();
         this.readActiveMenuEntry();
+
+        // modal example:
+        /*this.modalService.show(ConfirmationDialogComponent, {lol: "krnek"}).subscribe(
+            (result: any) => {
+                console.log("modal data", result);
+            }
+        );*/
     }
 
     private readActiveMenuEntry(): void {
@@ -50,11 +62,26 @@ export class FilesLayoutComponent implements OnInit {
     }
 
     public addFolder() {
-        /*this.modalService.show(ConfirmationDialogComponent, {lol: "krnek"}).subscribe(
-            (result: any) => {
-                console.log("modal data", result);
-            }
-        );*/
+        this.newDir.show = !this.newDir.show;
+    }
+
+    public saveFolder(): void {
+        if (this.newDir.value && this.newDir.value.length > 0) {
+            const parentId = this.currentDirectory ? this.currentDirectory.id : 1;
+            this.menuService.createDirectory(this.newDir.value, parentId).subscribe(
+                (res: MenuEntry) => {
+                    console.log("created", res);
+                    this.newDir = {
+                        show: false,
+                        value: ""
+                    };
+                    this.menuService.reloadCurrentDirectory();
+                },
+                (err) => {
+                    console.error(err);
+                }
+            );
+        }
     }
 
 }
