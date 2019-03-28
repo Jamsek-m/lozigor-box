@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {MenuEntry} from "../../../../models/menu/menu.models";
 import {MenuService} from "../../../services/menu/menu.service";
+import {ModalService} from "../../../services/modal/modal.service";
 
 @Component({
     selector: "mj-files-layout",
@@ -12,7 +13,7 @@ export class FilesLayoutComponent implements OnInit {
     private activeMenuEntry: MenuEntry = null;
     private currentDirectory: MenuEntry = null;
 
-    constructor(private menuService: MenuService) {
+    constructor(private menuService: MenuService, private modalService: ModalService) {
     }
 
     ngOnInit() {
@@ -46,6 +47,14 @@ export class FilesLayoutComponent implements OnInit {
 
     public rename(): void {
         console.log("rename", this.activeMenuEntry.id);
+    }
+
+    public addFolder() {
+        /*this.modalService.show(ConfirmationDialogComponent, {lol: "krnek"}).subscribe(
+            (result: any) => {
+                console.log("modal data", result);
+            }
+        );*/
     }
 
 }

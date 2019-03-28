@@ -1,0 +1,32 @@
+@import "../../../styles/variables";
+
+.confirmation-dialog {
+    padding: 25px;
+
+    .dialog-header {
+        display: flex;
+        justify-content: flex-end;
+
+        span {
+            font-size: 26px;
+            cursor: pointer;
+            line-height: 14px;
+        }
+    }
+    .dialog-content {
+        min-height: 80px;
+
+        .dialog-question {
+            padding: 20px 0;
+        }
+        .dialog-actions {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+
+            .cancel {
+                margin-right: 20px;
+            }
+        }
+    }
+}

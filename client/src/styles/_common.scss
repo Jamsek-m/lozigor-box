@@ -35,3 +35,23 @@
         font-size: 16px;
     }
 }
+
+.btn {
+    cursor: pointer;
+    padding: 5px 15px;
+    height: 34px;
+    font-size: 16px;
+    border-radius: 3px;
+
+    &.primary-btn {
+        border: none;
+        background-color: $blue-400;
+        color: $white;
+    }
+    &.secondary-btn {
+        border: 1px solid $blue-400;
+        background-color: $white;
+        color: $blue-400;
+    }
+}
+

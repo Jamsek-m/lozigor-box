@@ -1,0 +1,12 @@
+<div class="confirmation-dialog">
+    <div class="dialog-header">
+        <span (click)="close()">&times;</span>
+    </div>
+    <div class="dialog-content">
+        <div class="dialog-question">Are you sure?</div>
+        <div class="dialog-actions">
+            <button class="btn secondary-btn cancel" (click)="close()">No</button>
+            <button class="btn primary-btn" (click)="confirm()">Yes</button>
+        </div>
+    </div>
+</div>
