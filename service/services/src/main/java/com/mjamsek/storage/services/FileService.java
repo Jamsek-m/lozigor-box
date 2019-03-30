@@ -2,13 +2,13 @@ package com.mjamsek.storage.services;
 
 import com.mjamsek.storage.entities.dto.File;
 import com.mjamsek.storage.entities.schema.FileEntity;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.ContentDisposition;
 
 import java.io.InputStream;
 
 public interface FileService {
     
-    File saveFile(InputStream fileInputStream, FormDataContentDisposition fileMetadata);
+    File saveFile(InputStream fileInputStream, ContentDisposition fileMetadata);
     
     File getFile(long fileId);
     

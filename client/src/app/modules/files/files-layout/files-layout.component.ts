@@ -102,18 +102,21 @@ export class FilesLayoutComponent implements OnInit {
     }
 
     public setFileForm(files: FileList): void {
-        this.newFile.file = files.item(0);
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < files.length; i++) {
+            this.newFile.files.push(files.item(i));
+        }
     }
 
     public saveFile(): void {
-        if (this.newFile.file !== null && this.newFile.parent !== -1) {
-            this.fileService.uploadFile(this.newFile.file, this.newFile.parent).subscribe(
-                (res) => {
+        if (this.newFile.files.length > 0 && this.newFile.parent !== -1) {
+            this.fileService.uploadFiles(this.newFile.files, this.newFile.parent).subscribe(
+                (res: any) => {
                     console.log("upload succedeed!");
                     this.newFile.reset();
                     this.menuService.reloadCurrentDirectory();
                 },
-                (err) => {
+                (err: Error) => {
                     console.error(err);
                 }
             );
@@ -148,18 +151,18 @@ class NewDirRequest {
 
 class NewFileRequest {
     public show: boolean;
-    public file: File;
+    public files: File[];
     public parent: number;
 
     constructor(parent?: number) {
         this.show = false;
-        this.file = null;
+        this.files = [];
         this.parent = 1;
     }
 
     public reset(): void {
         this.show = false;
-        this.file = null;
+        this.files = [];
     }
 }
 

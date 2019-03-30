@@ -17,9 +17,11 @@ export class FileService {
 
     }
 
-    public uploadFile(file: File, parentId: number): Observable<any> {
+    public uploadFiles(file: File[], parentId: number): Observable<any> {
         const formData = new FormData();
-        formData.append("file", file);
+        file.forEach(fl => {
+            formData.append("file", fl);
+        });
         formData.append("parent", parentId.toString(10));
         const url = `${this.v1Url}/upload`;
         return this.http.post(url, formData);

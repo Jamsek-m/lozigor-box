@@ -9,7 +9,7 @@ import com.mjamsek.storage.services.FileService;
 import com.mjamsek.storage.services.config.LozigorboxConfiguration;
 import com.mjamsek.storage.services.mappers.FileMapper;
 import com.mjamsek.storage.services.utils.FileUtil;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.ContentDisposition;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -33,7 +33,7 @@ public class FileServiceImpl implements FileService {
     
     @Transactional
     @Override
-    public File saveFile(InputStream fileInputStream, FormDataContentDisposition fileMetadata) {
+    public File saveFile(InputStream fileInputStream, ContentDisposition fileMetadata) {
         FileEntity entity = new FileEntity();
         String filename = fileMetadata.getFileName();
         String storeAsFileName = FileUtil.getTimestampedFilename(filename);

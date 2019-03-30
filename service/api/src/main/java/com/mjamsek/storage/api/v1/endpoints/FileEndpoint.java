@@ -1,11 +1,12 @@
 package com.mjamsek.storage.api.v1.endpoints;
 
-import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
+import com.mjamsek.storage.api.v1.constants.CustomHttpHeader;
 import com.mjamsek.storage.entities.dto.File;
 import com.mjamsek.storage.entities.dto.MenuEntry;
 import com.mjamsek.storage.services.FileService;
 import com.mjamsek.storage.services.MenuEntryService;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.ContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import javax.enterprise.context.RequestScoped;
@@ -15,7 +16,8 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
-import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequestScoped
 @Path("/files")
@@ -32,19 +34,22 @@ public class FileEndpoint {
     @POST
     @Path("/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadFile(
-        @FormDataParam("file") InputStream fileInputStream,
-        @FormDataParam("file") FormDataContentDisposition fileMetadata,
+    public Response mutlipleUpload(
+        @FormDataParam("file") List<FormDataBodyPart> body,
         @FormDataParam("parent") long parentId
     ) {
-        
-        File file = fileService.saveFile(fileInputStream, fileMetadata);
-        MenuEntry menuEntry = menuEntryService.createNewFileEntry(file, fileMetadata.getFileName(), parentId);
-        
-        String baseUrl = ConfigurationUtil.getInstance().get("kumuluzee.server.base-url").get();
-        URI entityUri = URI.create(baseUrl + "/v1/files/download/" + file.getId());
-        
-        return Response.created(entityUri).entity(menuEntry).build();
+        List<MenuEntry> responseEntries = new ArrayList<>();
+        for(FormDataBodyPart part : body) {
+            ContentDisposition fileMetadata = part.getContentDisposition();
+            File file = fileService.saveFile(part.getEntityAs(InputStream.class), fileMetadata);
+            MenuEntry menuEntry = menuEntryService.createNewFileEntry(file, fileMetadata.getFileName(), parentId);
+            responseEntries.add(menuEntry);
+        }
+        return Response
+            .status(Response.Status.CREATED)
+            .entity(responseEntries)
+            .header(CustomHttpHeader.X_TOTAL_COUNT, responseEntries.size())
+            .build();
     }
     
     @GET

@@ -1,13 +1,16 @@
 <div class="files-toolbar">
+    <!-- UPLOAD -->
     <mj-toolbar-button [title]="'Upload'" [icon]="['fas', 'cloud-upload-alt']"
         (whenClicked)="upload()"></mj-toolbar-button>
     <span class="inline-form" *ngIf="newFile.show">
-        <input placeholder="Folder name" class="form-input" type="file"
+        <input placeholder="Folder name" class="form-input" type="file" multiple
             name="new-file" (change)="setFileForm($event.target.files)"/>
         <span class="form-input-append" (click)="saveFile()">
             <fa-icon [icon]="['fas', 'check']"></fa-icon>
         </span>
     </span>
+
+    <!-- NEW FOLDER -->
     <mj-toolbar-button [title]="'New Folder'" (whenClicked)="addFolder()"
         [icon]="['fas', 'folder-plus']"></mj-toolbar-button>
     <span class="inline-form" *ngIf="newDir.show">
@@ -17,10 +20,14 @@
             <fa-icon [icon]="['fas', 'check']"></fa-icon>
         </span>
     </span>
+
+    <!-- MOVE -->
     <!--<mj-toolbar-button *ngIf="activeMenuEntry !== null" [title]="'Move'" (whenClicked)="move()"
         [icon]="['fas', 'exchange-alt']"></mj-toolbar-button>-->
     <mj-toolbar-button *ngIf="activeMenuEntry !== null" [title]="'Rename'" (whenClicked)="rename()"
         [icon]="['fas', 'pencil-alt']"></mj-toolbar-button>
+
+    <!-- RENAME -->
     <span class="inline-form" *ngIf="activeMenuEntry !== null && renameEntry.show">
         <input placeholder="Folder name" class="form-input" type="text" (keydown.enter)="renameMenuEntry()"
             name="new-dir" [(ngModel)]="renameEntry.value"/>
@@ -28,6 +35,8 @@
             <fa-icon [icon]="['fas', 'check']"></fa-icon>
         </span>
     </span>
+
+    <!-- DELETE -->
     <mj-toolbar-button *ngIf="activeMenuEntry !== null" [title]="'Delete'" (whenClicked)="delete()"
         [icon]="['fas', 'trash']"></mj-toolbar-button>
 </div>
