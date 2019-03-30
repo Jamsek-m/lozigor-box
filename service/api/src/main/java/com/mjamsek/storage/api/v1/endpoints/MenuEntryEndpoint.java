@@ -3,6 +3,7 @@ package com.mjamsek.storage.api.v1.endpoints;
 import com.mjamsek.storage.api.v1.constants.CustomHttpHeader;
 import com.mjamsek.storage.entities.dto.Directory;
 import com.mjamsek.storage.entities.dto.MenuEntry;
+import com.mjamsek.storage.entities.dto.MenuEntryRenameRequest;
 import com.mjamsek.storage.services.MenuEntryService;
 
 import javax.enterprise.context.RequestScoped;
@@ -63,5 +64,19 @@ public class MenuEntryEndpoint {
         } else {
             return Response.status(Response.Status.NO_CONTENT).build();
         }
+    }
+    
+    @PATCH
+    @Path("/{id}")
+    public Response renameMenuEntry(@PathParam("id") long entryId, MenuEntryRenameRequest request) {
+        MenuEntry entry = menuEntryService.renameMenuEntry(entryId, request);
+        return Response.ok(entry).build();
+    }
+    
+    @DELETE
+    @Path("/{id}")
+    public Response removeMenuItem(@PathParam("id") long entryId) {
+        this.menuEntryService.removeMenuEntry(entryId);
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 }

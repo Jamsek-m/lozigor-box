@@ -62,7 +62,12 @@ public class FileServiceImpl implements FileService {
     
     @Override
     public void deleteFile(long fileId) {
-    
+        FileEntity entity = em.find(FileEntity.class, fileId);
+        if (entity != null) {
+            String storagePath = configuration.getDataStoragePath();
+            FileUtil.cleanupFileOnDisk(storagePath, entity.getFilename());
+            this.cleanupFileInDb(entity);
+        }
     }
     
     @Override

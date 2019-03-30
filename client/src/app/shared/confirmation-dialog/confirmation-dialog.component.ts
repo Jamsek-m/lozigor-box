@@ -12,7 +12,6 @@ export class ConfirmationDialogComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this);
     }
 
     public close() {

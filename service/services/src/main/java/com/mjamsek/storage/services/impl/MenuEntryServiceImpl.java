@@ -3,6 +3,7 @@ package com.mjamsek.storage.services.impl;
 import com.mjamsek.storage.entities.dto.Directory;
 import com.mjamsek.storage.entities.dto.File;
 import com.mjamsek.storage.entities.dto.MenuEntry;
+import com.mjamsek.storage.entities.dto.MenuEntryRenameRequest;
 import com.mjamsek.storage.entities.enums.MenuEntryType;
 import com.mjamsek.storage.entities.exceptions.db.EntityNotFoundException;
 import com.mjamsek.storage.entities.schema.FileEntity;
@@ -63,10 +64,12 @@ public class MenuEntryServiceImpl implements MenuEntryService {
     
     @Transactional
     @Override
-    public void removeFileEntry(long fileEntryId) {
-        MenuEntryEntity entity = em.find(MenuEntryEntity.class, fileEntryId);
+    public void removeMenuEntry(long menuEntryId) {
+        MenuEntryEntity entity = em.find(MenuEntryEntity.class, menuEntryId);
         if (entity == null) {
-            throw new EntityNotFoundException(fileEntryId, MenuEntryEntity.class);
+            throw new EntityNotFoundException(menuEntryId, MenuEntryEntity.class);
+        } else if (entity.getType() == MenuEntryType.FILE) {
+            fileService.deleteFile(entity.getFile().getId());
         }
         em.remove(entity);
     }
@@ -106,6 +109,17 @@ public class MenuEntryServiceImpl implements MenuEntryService {
         entity.setName(dir.getDirectoryName());
         entity.setFile(null);
         em.persist(entity);
+        return MenuEntryMapper.fromEntity(entity);
+    }
+    
+    @Override
+    public MenuEntry renameMenuEntry(long entryId, MenuEntryRenameRequest request) {
+        MenuEntryEntity entity = em.find(MenuEntryEntity.class, entryId);
+        if (entity == null) {
+            throw new EntityNotFoundException(entryId, MenuEntry.class);
+        }
+        entity.setName(request.getNewMenuEntryName());
+        em.merge(entity);
         return MenuEntryMapper.fromEntity(entity);
     }
     

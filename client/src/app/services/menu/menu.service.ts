@@ -31,6 +31,19 @@ export class MenuService {
         );
     }
 
+    public renameMenuEntry(entryId: number, newName: string): Observable<MenuEntry> {
+        const url = `${this.v1Api}/${entryId}`;
+        return this.http.patch(url, JSON.stringify({newMenuEntryName: newName})).pipe(
+            map(res => res as MenuEntry)
+        );
+    }
+
+    public removeMenuEntry(entryId: number): Observable<void> {
+        const url = `${this.v1Api}/${entryId}`;
+        return this.http.delete(url).pipe(map(() => null));
+    }
+
+
     public getDirectoryData(dirId: number): Observable<MenuEntry> {
         const url = `${this.v1Api}/dir/${dirId}`;
         return this.http.get(url).pipe(map(res => res as MenuEntry));

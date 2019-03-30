@@ -3,7 +3,7 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Observable, of} from "rxjs";
 import {catchError, map, switchMap, tap} from "rxjs/operators";
-import {File, FileDownloadResponse} from "../../../models/file/file.models";
+import {File as FileModel, FileDownloadResponse} from "../../../models/file/file.models";
 import {saveAs} from "file-saver";
 
 @Injectable({
@@ -17,7 +17,15 @@ export class FileService {
 
     }
 
-    public downloadFileWithGivenMeta(file: File): Observable<FileDownloadResponse> {
+    public uploadFile(file: File, parentId: number): Observable<any> {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("parent", parentId.toString(10));
+        const url = `${this.v1Url}/upload`;
+        return this.http.post(url, formData);
+    }
+
+    public downloadFileWithGivenMeta(file: FileModel): Observable<FileDownloadResponse> {
         const downloadUrl = `${this.v1Url}/download/${file.id}`;
         return this.http.get(downloadUrl, {responseType: "blob"}).pipe(
             tap((blob: any) => {
@@ -35,7 +43,7 @@ export class FileService {
         const metaUrl = `${this.v1Url}/${fileId}`;
 
         return this.http.get(metaUrl).pipe(
-            switchMap((fileMeta: File) => {
+            switchMap((fileMeta: FileModel) => {
                 return this.http.get(downloadUrl, {responseType: "blob"}).pipe(
                     tap((blob: any) => {
                         this.triggerSaveDialog(blob, fileMeta);
@@ -61,7 +69,7 @@ export class FileService {
         return of(FileDownloadResponse.UNKNOWN_ERROR);
     }
 
-    private triggerSaveDialog(data: any, meta: File): void {
+    private triggerSaveDialog(data: any, meta: FileModel): void {
         const blob = new Blob([data], {type: meta.mimeType});
         saveAs(blob, meta.filename);
     }
