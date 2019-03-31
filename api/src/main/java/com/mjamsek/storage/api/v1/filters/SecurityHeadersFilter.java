@@ -20,7 +20,7 @@ public class SecurityHeadersFilter implements Filter {
             resp.addHeader("X-XSS-Protection", "1; mode=block");
             resp.addHeader("X-Frame-Options", "DENY");
             // TODO: check if appropriate policy
-            resp.addHeader("Content-Security-Policy", "default-src");
+            // resp.addHeader("Content-Security-Policy", "default-src 'self' localhost:8080 *.mjamsek.com fonts.googleapis.com");
             chain.doFilter(request, resp);
         } else {
             chain.doFilter(request, response);

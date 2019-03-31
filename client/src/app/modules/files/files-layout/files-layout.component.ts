@@ -12,7 +12,7 @@ import {ConfirmationDialogComponent} from "../../../shared/confirmation-dialog/c
 })
 export class FilesLayoutComponent implements OnInit {
 
-    private activeMenuEntry: MenuEntry = null;
+    public activeMenuEntry: MenuEntry = null;
     private currentDirectory: MenuEntry = null;
 
     public newDir: NewDirRequest = new NewDirRequest();
@@ -128,6 +128,7 @@ export class FilesLayoutComponent implements OnInit {
             this.menuService.renameMenuEntry(this.activeMenuEntry.id, this.renameEntry.value).subscribe(
                 (entry: MenuEntry) => {
                     console.log("renamed!");
+                    this.renameEntry.show = false;
                     this.menuService.reloadCurrentDirectory();
                 },
                 (err) => {
