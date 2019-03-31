@@ -63,10 +63,10 @@ pipeline {
                 sh "docker rmi $dockerImageTag:latest"
             }
         }
-        stage("Deploying application") {
-            steps {
+        //stage("Deploying application") {
+        //    steps {
 
-            }
-        }
+        //    }
+        //}
     }
 }
