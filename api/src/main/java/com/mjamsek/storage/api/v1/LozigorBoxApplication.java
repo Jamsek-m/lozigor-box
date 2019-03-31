@@ -16,7 +16,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import javax.ws.rs.ApplicationPath;
 
 @ApplicationPath("/v1")
-@CrossOrigin(supportedMethods = "GET,POST,DELETE,PUT,OPTIONS,PATCH", allowOrigin = "192.168.1.22:5009")
+@CrossOrigin(supportedMethods = "GET,POST,DELETE,PUT,OPTIONS,PATCH")
 public class LozigorBoxApplication extends ResourceConfig {
     
     public LozigorBoxApplication() {
