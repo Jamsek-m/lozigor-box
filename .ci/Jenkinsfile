@@ -1,0 +1,72 @@
+pipeline {
+    environment {
+        registry = "https://docker.mjamsek.com"
+        registryCredential = "mjamsek-hub"
+        dockerImageTag = "docker.mjamsek.com/lozigorbox"
+        dockerImage = ""
+        version = ""
+    }
+
+    agent any
+
+    tools {
+        maven "maven3.6"
+        nodejs "node11.6"
+        jdk "jdk8"
+    }
+
+    stages {
+        stage("Cloning git") {
+            steps {
+                git branch: "master",
+                        credentialsId: "github-token",
+                        url: "https://github.com/Jamsek-m/lozigor-box.git"
+            }
+        }
+        stage("Set environment variables") {
+            steps {
+                script {
+                    version = readFile('VERSION').trim()
+                }
+            }
+        }
+        stage("Preparing client") {
+            steps {
+                sh "npm install --prefix ./client"
+            }
+        }
+        stage("Packaging application") {
+            steps {
+                sh "mvn clean package"
+            }
+        }
+        stage("Building docker image") {
+            steps {
+                script {
+                    dockerImage = docker.build dockerImageTag
+                }
+            }
+        }
+        stage("Publishing docker image") {
+            steps {
+                script {
+                    docker.withRegistry(registry, registryCredential) {
+                        dockerImage.push("$version")
+                        dockerImage.push("latest")
+                    }
+                }
+            }
+        }
+        stage("Removing generated docker images") {
+            steps {
+                sh "docker rmi $dockerImageTag:$version"
+                sh "docker rmi $dockerImageTag:latest"
+            }
+        }
+        stage("Deploying application") {
+            steps {
+
+            }
+        }
+    }
+}
