@@ -66,10 +66,12 @@ pipeline {
         }
         stage("Deploying application") {
             steps {
-                httpRequest consoleLogResponseBody: true, customHeaders: [[maskValue: true, name: 'X-Tasker-Key', value: taskerKey], [maskValue: false, name: 'X-Tasker-Name', value: 'lozigorbox']], httpMode: 'POST', requestBody: '{"actionName":"DockerPlugin.recreate","parameters":{"containerName":"lozigorbox","configDockerAPI":"DOCKER_API_0"}}', responseHandle: 'NONE', url: 'https://tasker.mjamsek.com/v1/actions/execute', validResponseCodes: '200'
-                def response = httpRequest url: "http://tasker.mjamsek.com/v1/actions/execute", validResponseCodes: '200'
-                if (response.status != 200) {
-                    error("Healthcheck failed!")
+                script {
+                    httpRequest consoleLogResponseBody: true, customHeaders: [[maskValue: true, name: 'X-Tasker-Key', value: taskerKey], [maskValue: false, name: 'X-Tasker-Name', value: 'lozigorbox']], httpMode: 'POST', requestBody: '{"actionName":"DockerPlugin.recreate","parameters":{"containerName":"lozigorbox","configDockerAPI":"DOCKER_API_0"}}', responseHandle: 'NONE', url: 'https://tasker.mjamsek.com/v1/actions/execute', validResponseCodes: '200'
+                    def response = httpRequest url: "http://tasker.mjamsek.com/v1/actions/execute", validResponseCodes: '200'
+                    if (response.status != 200) {
+                        error("Healthcheck failed!")
+                    }
                 }
             }
         }
