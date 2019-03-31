@@ -5,7 +5,7 @@ pipeline {
         dockerImageTag = "docker.mjamsek.com/lozigorbox"
         dockerImage = ""
         version = ""
-        taskerKey = "lozigorbox-tasker-key"
+        taskerKey = ""
     }
 
     agent any
@@ -66,12 +66,14 @@ pipeline {
         }
         stage("Deploying application") {
             steps {
-                echo "$taskerKey"
-                script {
-                    httpRequest acceptType: 'APPLICATION_JSON', consoleLogResponseBody: true, contentType: 'APPLICATION_JSON', customHeaders: [[maskValue: false, name: 'X-Tasker-Key', value: taskerKey], [maskValue: false, name: 'X-Tasker-Name', value: 'lozigorbox']], httpMode: 'POST', requestBody: '{"actionName":"DockerPlugin.recreate","parameters":{"containerName":"lozigorbox","configDockerAPI":"DOCKER_API_0"}}', responseHandle: 'NONE', url: 'https://tasker.mjamsek.com/v1/actions/execute', validResponseCodes: '200'
-                    def response = httpRequest url: "http://tasker.mjamsek.com/v1/actions/execute", validResponseCodes: '200'
-                    if (response.status != 200) {
-                        error("Healthcheck failed!")
+                withCredentials([string(credentialsId: 'lozigorbox-tasker-key', variable: 'taskerKey')]) {
+                    echo "$taskerKey"
+                    script {
+                        httpRequest acceptType: 'APPLICATION_JSON', consoleLogResponseBody: true, contentType: 'APPLICATION_JSON', customHeaders: [[maskValue: false, name: 'X-Tasker-Key', value: taskerKey], [maskValue: false, name: 'X-Tasker-Name', value: 'lozigorbox']], httpMode: 'POST', requestBody: '{"actionName":"DockerPlugin.recreate","parameters":{"containerName":"lozigorbox","configDockerAPI":"DOCKER_API_0"}}', responseHandle: 'NONE', url: 'https://tasker.mjamsek.com/v1/actions/execute', validResponseCodes: '200'
+                        def response = httpRequest url: "http://tasker.mjamsek.com/v1/actions/execute", validResponseCodes: '200'
+                        if (response.status != 200) {
+                            error("Healthcheck failed!")
+                        }
                     }
                 }
             }
